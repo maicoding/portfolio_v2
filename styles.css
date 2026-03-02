@@ -325,7 +325,8 @@ main {
 .drawer-content {
   overflow: auto;
   padding: 1rem;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
@@ -347,21 +348,29 @@ main {
   margin: 0;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.03);
-  aspect-ratio: 4 / 3;
+  height: clamp(190px, 34vh, 320px);
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
 }
 
 .drawer-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  filter: grayscale(18%) contrast(1.06);
+  background: #090909;
+  filter: grayscale(14%) contrast(1.05);
 }
 
 .story-block {
   border-top: 1px solid var(--line);
   padding-top: 0.7rem;
+  background: rgba(8, 8, 8, 0.86);
+  position: relative;
+  z-index: 1;
 }
 
 .story-block h3 {
@@ -452,6 +461,14 @@ main {
     width: 100vw;
   }
 
+  .drawer-content {
+    padding: 0.9rem;
+  }
+
+  .drawer-media {
+    height: min(34vh, 240px);
+  }
+
   .site-footer {
     flex-direction: column;
   }
@@ -462,4 +479,51 @@ main {
     animation: none !important;
     transition: none !important;
   }
+}
+
+.minimal-main {
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+}
+
+.minimal-intro {
+  max-width: 76ch;
+  border: 1px solid var(--line);
+  background: rgba(10, 10, 10, 0.82);
+  backdrop-filter: blur(6px);
+  padding: clamp(1.1rem, 2.2vw, 2rem);
+}
+
+.minimal-name {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2rem, 6.8vw, 5.2rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+
+.minimal-role {
+  margin: 0.4rem 0 1.2rem;
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  color: var(--muted);
+}
+
+.minimal-heading {
+  margin: 0 0 0.65rem;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.9rem);
+  text-transform: uppercase;
+}
+
+.minimal-copy {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.minimal-copy p {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.2vw, 1.04rem);
+  color: var(--text);
 }

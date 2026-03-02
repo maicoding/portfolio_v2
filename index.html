@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Portfolio v2 von Claudia Mai: experimentelle Netzkunst und kuratiertes Storytelling."
-    />
-    <title>Claudia Mai - Portfolio v2</title>
+    <meta name="description" content="Portfolio von Claudia Mai" />
+    <title>Claudia Mai</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,89 +17,21 @@
     <canvas id="signal-canvas" aria-hidden="true"></canvas>
     <div class="noise-layer" aria-hidden="true"></div>
 
-    <header class="site-header">
-      <p class="site-tag">CLAUDIA MAI / PORTFOLIO V2</p>
-      <nav class="top-nav" aria-label="Hauptnavigation">
-        <a href="#manifest">Manifest</a>
-        <a href="#works">Works</a>
-        <a href="#method">Method</a>
-      </nav>
-    </header>
+    <main class="minimal-main">
+      <section class="minimal-intro">
+        <h1 class="minimal-name">Claudia Mai</h1>
+        <p class="minimal-role">Design, Forschung, Lehre</p>
 
-    <main>
-      <section class="hero section" id="top" data-chapter="CH_00">
-        <p class="chapter-kicker">CH_00 // SIGNAL</p>
-        <h1 class="hero-title" id="glitch-title">A portfolio that behaves like a live transmission.</h1>
-      </section>
-
-      <section class="section manifesto" id="manifest" data-chapter="CH_01">
-        <p class="chapter-kicker">CH_01 // MANIFEST</p>
-        <div class="manifest-grid">
-          <article>
-            <h2>01 / Haltung</h2>
-            <p>
-              Gestaltung ist hier nicht nur Oberflaeche, sondern Positionierung.
-              Jedes Projekt hat einen Konflikt, eine Methode und eine Konsequenz.
-            </p>
-          </article>
-          <article>
-            <h2>02 / Material</h2>
-            <p>
-              Bilder, Daten, Textfragmente, Zufall, KI, Handarbeit: Alles wird als
-              Material verstanden, nicht als fertige Wahrheit.
-            </p>
-          </article>
-          <article>
-            <h2>03 / Erzaehlung</h2>
-            <p>
-              Statt linearem "Projekt aufrufen" entsteht ein Storyflow.
-              Besucherinnen bewegen sich kapitelweise durch Positionen, Brueche und
-              Ergebnisse.
-            </p>
-          </article>
+        <h2 class="minimal-heading">Arbeitsweise</h2>
+        <div class="minimal-copy">
+          <p>Meine Projekte entstehen aus konkreten Fragestellungen im Kontext von Bildkultur, Plattformlogik und digitalen Produktionsbedingungen.</p>
+          <p>Ich untersuche, wie visuelle Systeme Bedeutung erzeugen und wie sich diese unter algorithmischen Bedingungen verändern.</p>
+          <p>Ich arbeite mit fotografischem Material, Text, Daten und generativen Verfahren.</p>
+          <p>Die Wahl des Mediums ergibt sich aus der jeweiligen Fragestellung.</p>
+          <p>Ergebnisse entstehen als Publikationen, räumliche Formate, digitale Interfaces oder hybride Settings.</p>
         </div>
-      </section>
-
-      <section class="section works" id="works" data-chapter="CH_02">
-        <div class="works-head">
-          <p class="chapter-kicker">CH_02 // WORK INDEX</p>
-          <p class="works-hint">Kachel waehlen, um die Story-Ebene zu oeffnen.</p>
-        </div>
-        <div class="works-grid" id="works-grid"></div>
-      </section>
-
-      <section class="section method" id="method" data-chapter="CH_03">
-        <p class="chapter-kicker">CH_03 // METHOD</p>
-        <ol class="method-list">
-          <li>
-            <h3>Observe</h3>
-            <p>Recherche beginnt im Kontext: Bildpolitik, Plattformlogik, soziale Situation.</p>
-          </li>
-          <li>
-            <h3>Distort</h3>
-            <p>Material wird verschoben: durch KI, Uebersetzung, Re-Layout, Hybridisierung.</p>
-          </li>
-          <li>
-            <h3>Compose</h3>
-            <p>Formate entstehen als Systeme: Print, Raum, Web, Performance, AR.</p>
-          </li>
-          <li>
-            <h3>Reflect</h3>
-            <p>Jedes Ergebnis wird als Aussage getestet: Was zeigt es? Was verschweigt es?</p>
-          </li>
-        </ol>
       </section>
     </main>
-
-    <aside class="story-drawer" id="story-drawer" aria-live="polite" aria-hidden="true">
-      <button class="drawer-close" id="drawer-close" type="button" aria-label="Schliessen">X</button>
-      <div class="drawer-content" id="drawer-content"></div>
-    </aside>
-
-    <footer class="site-footer">
-      <p>Portfolio v2 - Experimental Narrative Edition</p>
-      <a href="#top">Back to top</a>
-    </footer>
 
     <script type="module" src="./app.js"></script>
   </body>
