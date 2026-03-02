@@ -40,10 +40,19 @@ const openDrawer = (projectId) => {
     return;
   }
 
+  const mediaHtml = project.image
+    ? `
+      <figure class="drawer-media">
+        <img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" loading="lazy" decoding="async" />
+      </figure>
+    `
+    : "";
+
   drawerContent.innerHTML = `
     <p class="chapter-kicker">STORY LAYER</p>
     <h2 class="drawer-title">${escapeHtml(project.title)}</h2>
     <p class="drawer-sub">${escapeHtml(project.meta)}</p>
+    ${mediaHtml}
 
     <section class="story-block">
       <h3>Hook</h3>

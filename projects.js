@@ -3,6 +3,7 @@ export const projects = [
     id: "1984",
     title: "1984 to go",
     meta: "Claudia Mai",
+    image: "https://sugarscroll.de/wp-content/uploads/2018/08/GU3A9459_klein.jpg",
     tone: "archive",
     hook: "Was bleibt von Literatur, wenn nur Handlung uebrig bleibt?",
     context:
@@ -17,6 +18,7 @@ export const projects = [
     id: "white-rabbit",
     title: "Follow the white rabbit",
     meta: "Claudia Mai",
+    image: "https://sugarscroll.de/wp-content/uploads/2019/08/1_MG_0603.jpg",
     tone: "signal",
     hook: "Wo endet das Analoge, wenn das Digitale nur noch aufgesetzt wirkt?",
     context:
@@ -31,6 +33,7 @@ export const projects = [
     id: "fast-fwd-pub",
     title: "fast fwd: too slow? (Publikation)",
     meta: "Claudia Mai",
+    image: "https://sugarscroll.de/wp-content/uploads/2016/08/repros-110-von-113.jpg",
     tone: "editorial",
     hook: "Wie veraendert sich Publikation, wenn Formate fluessig werden?",
     context:
@@ -45,6 +48,7 @@ export const projects = [
     id: "real-mix",
     title: "REAL/MIX",
     meta: "Studierende FH Dortmund",
+    image: "https://sugarscroll.de/wp-content/uploads/2025/08/0-cover-1-3-735x1024.png",
     tone: "collision",
     hook: "Wie sieht Realitaet aus, wenn Tool-Aesthetik Alltag ueberlagert?",
     context:
@@ -59,6 +63,7 @@ export const projects = [
     id: "city-play",
     title: "City of Play",
     meta: "Summer School Essen",
+    image: "https://sugarscroll.de/wp-content/uploads/2025/08/2-7f4fc42d-e550-45f9-8d4b-79155218246c-2-2-768x1024.jpg",
     tone: "urban",
     hook: "Kann Spiel eine politische Lesemaschine fuer Stadt sein?",
     context:
@@ -73,6 +78,7 @@ export const projects = [
     id: "nairobi",
     title: "NICE lab 50/50, Nairobi",
     meta: "Internationales Kooperationsprojekt",
+    image: "https://sugarscroll.de/wp-content/uploads/2024/09/Bildschirmfoto-2024-08-28-um-15.18.30-1024x769.png",
     tone: "network",
     hook: "Wie wird Kooperation sichtbar, wenn unterschiedliche Kontexte gleichberechtigt arbeiten?",
     context:
@@ -87,6 +93,7 @@ export const projects = [
     id: "datenschal",
     title: "Patient 01034063 // Datenschal",
     meta: "Janneke Sander",
+    image: "https://sugarscroll.de/wp-content/uploads/2023/07/IMG_1603-736x1024.jpg",
     tone: "data",
     hook: "Was bedeutet Intimitaet, wenn Daten koerperlich lesbar werden?",
     context:
@@ -101,6 +108,7 @@ export const projects = [
     id: "future-nature",
     title: "Future x Nature",
     meta: "Alexander Grygoryan, Lena Luebner, Lisa von Rolbiezki",
+    image: "https://sugarscroll.de/wp-content/uploads/2022/12/Bildschirmfoto-2022-12-16-um-11.36.30-601x1024.png",
     tone: "fashion",
     hook: "Kann digitale Mode Konsumdruck reduzieren statt ihn zu beschleunigen?",
     context:
