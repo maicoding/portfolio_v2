@@ -483,12 +483,13 @@ main {
 
 .minimal-main {
   min-height: 100vh;
-  display: grid;
-  align-items: center;
+  display: block;
 }
 
 .minimal-intro {
   max-width: 76ch;
+  margin-top: clamp(1.4rem, 4vh, 3.2rem);
+  margin-bottom: clamp(0.6rem, 2vh, 1.4rem);
   border: 1px solid var(--line);
   background: rgba(10, 10, 10, 0.82);
   backdrop-filter: blur(6px);
