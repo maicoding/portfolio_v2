@@ -19,6 +19,19 @@ let focusIndex = 0;
 let autoFocus = true;
 let nextFocusAt = 0;
 
+const variants = ["terminal", "scan", "splat", "repair"];
+const variant = variants[Math.floor(Math.random() * variants.length)];
+document.body.dataset.fieldEffect = variant;
+
+const variantIndex = variants.indexOf(variant);
+const paletteSets = [
+  [0xa0beff, 0x0fffd7, 0xf4f0e8, 0x5a78ff],
+  [0x7df9ff, 0xd8ff5c, 0xf4f0e8, 0x5a78ff],
+  [0xf4f0e8, 0xa0beff, 0xd8ff5c, 0x8c7cff],
+  [0xd8ff5c, 0xa0beff, 0xf4f0e8, 0x0fffd7]
+];
+const palette = paletteSets[variantIndex];
+
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -30,15 +43,110 @@ camera.position.set(0, 0, 15);
 const group = new THREE.Group();
 scene.add(group);
 
+const background = new THREE.Mesh(
+  new THREE.PlaneGeometry(42, 24, 1, 1),
+  new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: 0 },
+      mode: { value: variantIndex },
+      resolution: { value: new THREE.Vector2(1, 1) }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      precision highp float;
+      uniform float time;
+      uniform int mode;
+      uniform vec2 resolution;
+      varying vec2 vUv;
+
+      float hash(vec2 p) {
+        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+      }
+
+      float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        float a = hash(i);
+        float b = hash(i + vec2(1.0, 0.0));
+        float c = hash(i + vec2(0.0, 1.0));
+        float d = hash(i + vec2(1.0, 1.0));
+        vec2 u = f * f * (3.0 - 2.0 * f);
+        return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+      }
+
+      float lineField(vec2 uv, float angle, float density) {
+        float v = uv.x * cos(angle) + uv.y * sin(angle);
+        return smoothstep(0.965, 1.0, fract(v * density));
+      }
+
+      void main() {
+        vec2 uv = vUv;
+        vec2 p = uv - 0.5;
+        float grain = hash(gl_FragCoord.xy + time);
+        float n = noise(uv * 8.0 + time * 0.08);
+        float scan = smoothstep(0.55, 0.58, sin((uv.y * resolution.y) * 1.75));
+        float vignette = smoothstep(0.82, 0.12, length(p));
+        vec3 ink = vec3(0.015, 0.018, 0.05);
+        vec3 blue = vec3(0.08, 0.06, 0.78);
+        vec3 pale = vec3(0.62, 0.75, 1.0);
+        vec3 green = vec3(0.78, 1.0, 0.36);
+        vec3 cyan = vec3(0.05, 1.0, 0.84);
+        vec3 col = ink;
+
+        if (mode == 0) {
+          float grid = lineField(uv + vec2(time * 0.01, 0.0), 0.0, 18.0) + lineField(uv, 1.5708, 13.0);
+          float blocks = step(0.78, noise(floor(uv * vec2(18.0, 10.0)) + time * 0.25));
+          col = mix(ink, blue, 0.55 + n * 0.18);
+          col += pale * grid * 0.22 + cyan * blocks * 0.12;
+        } else if (mode == 1) {
+          float bands = lineField(uv + vec2(0.0, time * 0.025), 1.5708, 44.0);
+          float tear = smoothstep(0.44, 0.48, noise(vec2(uv.y * 2.0, time * 0.35)));
+          col = mix(ink, vec3(0.025, 0.03, 0.08), 0.7);
+          col += pale * bands * 0.26 + green * tear * 0.08;
+        } else if (mode == 2) {
+          float splat = 0.0;
+          for (int i = 0; i < 9; i++) {
+            float fi = float(i);
+            vec2 c = vec2(hash(vec2(fi, 2.0)), hash(vec2(fi, 7.0)));
+            c += vec2(sin(time * 0.12 + fi), cos(time * 0.1 + fi * 2.0)) * 0.035;
+            float d = length((uv - c) * vec2(1.4, 1.0));
+            splat += exp(-d * d * (10.0 + fi));
+          }
+          col = mix(ink, blue, 0.34);
+          col += mix(cyan, pale, n) * splat * 0.2;
+        } else {
+          float net = lineField(uv + n * 0.025, 0.76, 22.0) + lineField(uv - n * 0.02, -0.82, 19.0);
+          float pulse = smoothstep(0.35, 0.0, abs(length(p) - (0.18 + sin(time * 0.4) * 0.05)));
+          col = mix(ink, vec3(0.02, 0.03, 0.12), 0.8);
+          col += green * net * 0.18 + pale * pulse * 0.16;
+        }
+
+        col += grain * 0.045;
+        col *= vignette;
+        col -= scan * 0.025;
+        gl_FragColor = vec4(col, 1.0);
+      }
+    `,
+    depthWrite: false,
+    depthTest: false
+  })
+);
+background.position.z = -12;
+scene.add(background);
+
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2(9, 9);
-const clock = new THREE.Clock();
+const startTime = performance.now();
 const objects = [];
 const links = [];
 let hovered = null;
 let targetSpin = 0;
-
-const palette = [0xf73f16, 0x2fd0ff, 0xf0d811, 0xf4f0e8];
 
 const makeLabel = (project, i) => {
   const c = document.createElement("canvas");
@@ -197,6 +305,7 @@ setFocus(projects[0].id);
 const resize = () => {
   const { clientWidth, clientHeight } = canvas.parentElement;
   renderer.setSize(clientWidth, clientHeight, false);
+  background.material.uniforms.resolution.value.set(clientWidth, clientHeight);
   camera.aspect = clientWidth / clientHeight;
   camera.updateProjectionMatrix();
 };
@@ -220,7 +329,7 @@ canvas.addEventListener("click", () => {
 });
 
 const animate = () => {
-  const time = clock.getElapsedTime();
+  const time = (performance.now() - startTime) / 1000;
   if (autoFocus && time > nextFocusAt) {
     focusNext();
     nextFocusAt = time + 4.2;
@@ -228,6 +337,7 @@ const animate = () => {
 
   group.rotation.y += (targetSpin - group.rotation.y) * 0.035;
   group.rotation.z = Math.sin(time * 0.2) * 0.04;
+  background.material.uniforms.time.value = time;
   particles.rotation.y = time * 0.025;
 
   raycaster.setFromCamera(pointer, camera);

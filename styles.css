@@ -840,7 +840,7 @@ body {
   background:
     linear-gradient(90deg, rgba(255,255,255,0.16) 0 1px, transparent 1px 17px),
     linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 29px),
-    conic-gradient(from 90deg at 18% 22%, #f73f16 0 6deg, transparent 6deg 92deg, #2fd0ff 92deg 97deg, transparent 97deg),
+    radial-gradient(circle at 18% 22%, rgba(160, 190, 255, 0.14), transparent 34%),
     #050505;
   background-attachment: fixed;
 }
@@ -1469,4 +1469,80 @@ body[data-mode="forensic"] {
     grid-column: 2;
     text-align: left;
   }
+}
+
+
+body {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(90, 120, 255, 0.22), transparent 46%),
+    linear-gradient(180deg, #05050d, #010102 64%, #05050d);
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -4;
+  background:
+    repeating-linear-gradient(0deg, rgba(244, 240, 232, 0.045) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(160, 190, 255, 0.04) 0 1px, transparent 1px 96px);
+  opacity: 0.66;
+}
+
+.portfolio-field {
+  background:
+    linear-gradient(180deg, rgba(1, 1, 2, 0.08), rgba(1, 1, 2, 0.42)),
+    #05050d;
+}
+
+.portfolio-field::before,
+.portfolio-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.portfolio-field::before {
+  background:
+    linear-gradient(90deg, rgba(160, 190, 255, 0.22) 0 1px, transparent 1px),
+    linear-gradient(0deg, rgba(244, 240, 232, 0.08) 0 1px, transparent 1px);
+  background-size: 14vw 100%, 100% 18vh;
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.portfolio-field::after {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(216, 255, 92, 0.16), transparent 16rem),
+    radial-gradient(circle at 88% 72%, rgba(15, 255, 215, 0.13), transparent 18rem),
+    linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.42));
+}
+
+body[data-field-effect="terminal"] .field-controls button.is-active,
+body[data-field-effect="terminal"] .field-index button.is-focus {
+  background: #a0beff;
+}
+
+body[data-field-effect="scan"] .field-controls button.is-active,
+body[data-field-effect="scan"] .field-index button.is-focus {
+  background: #d8ff5c;
+}
+
+body[data-field-effect="splat"] .field-controls button.is-active,
+body[data-field-effect="splat"] .field-index button.is-focus {
+  background: #f4f0e8;
+}
+
+body[data-field-effect="repair"] .field-controls button.is-active,
+body[data-field-effect="repair"] .field-index button.is-focus {
+  background: #0fffd7;
+}
+
+.field-controls button[data-field-mode="next"] {
+  background: rgba(160, 190, 255, 0.86);
+  border-color: rgba(160, 190, 255, 0.86);
 }
