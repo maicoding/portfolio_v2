@@ -7,7 +7,7 @@ export const projects = [
     tone: "archive",
     hook: "Was bleibt von Literatur, wenn nur Handlung übrig bleibt?",
     context:
-      "Ausgangspunkt ist das Format Weltliteratur to go. Der Roman wird nicht gelesen, sondern in ein komprimiertes Videoformat überführt.",
+      "Ausgangspunkt ist das Format Weltliteratur to go. Der Roman wandert in ein komprimiertes Videoformat und verliert dabei große Teile seiner sprachlichen Oberfläche.",
     process:
       "KI-Transkription des Videos, algorithmisches Schwärzen des Originaltexts, Sichtbarmachung nur der im Video vorkommenden Wörter.",
     outcome:
@@ -41,7 +41,7 @@ export const projects = [
     process:
       "Inhalte werden als veränderbare Module angelegt, die je nach Ausgabeprogramm anders erscheinen.",
     outcome:
-      "Publikation wird als offenes System lesbar, nicht als statisches Endprodukt.",
+      "Publikation wird als offenes System mit mehreren Ausgabezuständen lesbar.",
     credits: "Leitung: Ulrike Brückner, Bianca Herlo"
   },
   {
@@ -97,7 +97,7 @@ export const projects = [
     tone: "data",
     hook: "Was bedeutet Intimität, wenn Daten körperlich lesbar werden?",
     context:
-      "Medizinische Information wird nicht als Datei, sondern als codiertes Strickmuster präsentiert.",
+      "Medizinische Information wird in ein codiertes Strickmuster übertragen.",
     process:
       "Befunde und Diagnosen werden in ein visuelles Schlüsselsystem übersetzt.",
     outcome:

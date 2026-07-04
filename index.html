@@ -5,74 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Portfolio von Claudia Mai" />
     <title>Claudia Mai</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Syne:wght@500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./pixel-site.css" />
   </head>
-  <body data-mode="index">
-    <div class="noise-layer" aria-hidden="true"></div>
+  <body>
+    <nav class="pixel-dots" aria-label="Abschnitte">
+      <button data-jump="hero" aria-label="Zum Start"></button>
+      <button data-jump="chat" aria-label="Zur Kommunikation"></button>
+      <button data-jump="desktop" aria-label="Zum Archiv"></button>
+    </nav>
 
-    <main class="minimal-main">
-      <section class="portfolio-field" id="portfolio-field" aria-labelledby="portfolio-title">
-        <canvas id="portfolio-webgl" aria-hidden="true"></canvas>
-        <div class="field-copy">
-          <h1 id="portfolio-title">Claudia Mai</h1>
-          <p>Postdigital Publishing, Bildsysteme, Lehre</p>
+    <button class="scroll-top" id="scrollTop" type="button" aria-label="Nach oben">↑</button>
+
+    <main>
+      <section class="hero-section" id="hero">
+        <div class="hero-split" aria-hidden="true">
+          <div class="hero-pane hero-pane-left">
+            <img src="./assets/pixel/hero-left.jpg" alt="" />
+            <div class="halftone"></div>
+          </div>
+          <div class="hero-pane hero-pane-right">
+            <img src="./assets/pixel/hero-right.jpg" alt="" />
+          </div>
         </div>
-        <div class="field-type-system" aria-hidden="true">
-          <span>☆</span><span>☾</span><span>⚐</span><span>❤</span><span>☽</span><span>✨</span>
+
+        <div class="scanlines" aria-hidden="true"></div>
+
+        <svg class="orbit" viewBox="0 0 1000 420" aria-hidden="true">
+          <ellipse cx="500" cy="210" rx="480" ry="180"></ellipse>
+          <ellipse cx="500" cy="210" rx="420" ry="150"></ellipse>
+          <polygon class="orbit-arrow" points="980,210 960,200 960,220"></polygon>
+          <polygon class="orbit-arrow reverse" points="20,210 40,200 40,220"></polygon>
+        </svg>
+
+        <div class="error-stack">
+          <div class="error-title">ERROR <span>✕</span></div>
+          <div class="blue-window small">
+            <div class="window-body icon-row"><span class="mini-icon">✕</span><span>postdigital</span></div>
+          </div>
+          <button class="pixel-button" type="button">RESTART</button>
         </div>
-        <div class="field-measure">
-          <span>Glyphenfeld / 08 Arbeiten / variable Ordnung</span>
+
+        <div class="warning-window">
+          <div class="window-head"><span>Warning</span><span>✕</span></div>
+          <div class="window-body">
+            <p>Daten, Bilder und Systeme sind keine neutralen Werkzeuge.</p>
+            <button class="pixel-button" type="button">verstanden</button>
+          </div>
+        </div>
+
+        <div class="cursor cursor-a" aria-hidden="true">↗</div>
+        <div class="cursor cursor-b" aria-hidden="true">☺</div>
+        <div class="corner-label">
+          <b>Claudia Mai</b>
+          <span>Design / Forschung / Lehre</span>
+          <span>Postdigital Publishing</span>
+        </div>
+
+        <div class="hero-title">
+          <h1><span>Postdigital</span><span>Publishing</span></h1>
+          <p>Bildsysteme, Daten, Publikationen, Lehre</p>
+        </div>
+
+        <div class="hero-actions">
+          <span>time is</span>
+          <a href="#desktop">ARCHIV &gt;</a>
+          <a href="./kompetenzmatrix.html">MATRIX</a>
+        </div>
+      </section>
+
+      <div class="divider blue"></div>
+
+      <section class="chat-section" id="chat">
+        <div class="speedlines" aria-hidden="true"></div>
+        <div class="chat-background" aria-hidden="true">
+          <img src="./assets/pixel/chat-section.jpg" alt="" />
+        </div>
+        <div class="chat-bubbles" id="chatBubbles"></div>
+        <div class="flip-phone" aria-hidden="true">
+          <div class="phone-top"><div class="phone-screen">CONNECTED</div></div>
+          <div class="phone-bottom">
+            <div class="phone-ring"></div>
+            <div class="phone-keys">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+              <span>7</span><span>8</span><span>9</span><span>*</span><span>0</span><span>#</span>
+            </div>
+          </div>
+        </div>
+        <div class="chat-copy">
+          <h2>Kommunikation als Oberfläche</h2>
+          <p>Fragmente, Stimmen und Systeme liegen übereinander. Publikationen, Forschung und Lehre werden als aktive Arbeitsflächen sichtbar.</p>
+        </div>
+      </section>
+
+      <div class="divider pale"></div>
+
+      <section class="desktop-section" id="desktop">
+        <img class="desktop-bg" src="./assets/pixel/desktop-section.jpg" alt="" />
+        <div class="matrix-rain" id="matrixRain" aria-hidden="true"></div>
+        <div class="terminal-copy">
+          <p>** Thank you for Login **</p>
+          <p>Archive loaded</p>
+          <p>press (Enter) to continue</p>
+        </div>
+        <div class="desktop-stage">
+          <div class="win youtube-a">
+            <div class="win-head"><span>portfolio.mov</span><span>_ □ ✕</span></div>
+            <div class="video-panel"><span>▶</span></div>
+          </div>
+          <div class="win youtube-b">
+            <div class="win-head"><span>archive.mov</span><span>_ □ ✕</span></div>
+            <div class="video-panel blank"></div>
+          </div>
+          <div class="win blog-window">
+            <div class="win-head"><span>www.claudiamai.net</span><span>_ □ ✕</span></div>
+            <div class="blog-body">
+              <h3>ARCHIV DER ARBEITEN</h3>
+              <div class="blog-grid">
+                <div class="sky-box">☁ archive ☁</div>
+                <ul>
+                  <li>Publikation</li>
+                  <li>Bildsystem</li>
+                  <li>Lehre</li>
+                  <li>Daten</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="win photobooth">
+            <div class="win-head dark"><span>Photo Booth</span><span>_ □ ✕</span></div>
+            <div class="mosaic" id="mosaic"></div>
+          </div>
+          <div class="win photoshop">
+            <div class="win-head gray"><span>File Edit View Option Help</span><span>_ □ ✕</span></div>
+            <div class="ps-body">
+              <div class="selection"></div>
+              <div class="toolbox"></div>
+            </div>
+          </div>
+          <div class="win hue">
+            <div class="win-head yellow"><span>Hue/Saturation</span><span>✕</span></div>
+            <div class="sliders"><span>Hue</span><i></i><span>Saturation</span><i></i><span>Luminosity</span><i></i></div>
+          </div>
+          <svg class="big-cursor" viewBox="0 0 24 28" aria-hidden="true">
+            <path d="M2 2L2 26L8 20L13 26L16 24L11 18L18 18L2 2Z"></path>
+          </svg>
+        </div>
+      </section>
+
+      <section class="project-strip" aria-label="Arbeiten">
+        <div class="strip-head">
+          <h2>Arbeiten</h2>
           <a href="./kompetenzmatrix.html">Kompetenzmatrix</a>
         </div>
-        <div class="field-orbit" id="field-orbit" aria-label="Ausgewählte Arbeiten"></div>
-        <div class="field-index" id="field-index" aria-label="Index"></div>
-        <div class="field-signal" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="field-controls" aria-label="Ansicht">
-          <button type="button" data-field-mode="all">Alle</button>
-          <button type="button" data-field-mode="next">Nächste Spur</button>
-          <button type="button" data-field-mode="publishing">Publikation</button>
-          <button type="button" data-field-mode="image">Bild</button>
-          <button type="button" data-field-mode="data">Daten</button>
-          <button type="button" data-field-mode="space">Raum</button>
-        </div>
-      </section>
-
-      <section class="minimal-intro site-brief">
-        <h1 class="minimal-name">Claudia Mai</h1>
-        <p class="minimal-role">Design, Forschung, Lehre</p>
-
-        <h2 class="minimal-heading">Arbeitsweise</h2>
-        <div class="minimal-copy">
-          <p>Meine Projekte entstehen aus konkreten Fragestellungen im Kontext von Bildkultur, Plattformlogik und digitalen Produktionsbedingungen.</p>
-          <p>Ich untersuche, wie visuelle Systeme Bedeutung erzeugen und wie sich diese unter algorithmischen Bedingungen verändern.</p>
-          <p>Ich arbeite mit fotografischem Material, Text, Daten und generativen Verfahren.</p>
-          <p>Die Wahl des Mediums ergibt sich aus der jeweiligen Fragestellung.</p>
-          <p>Ergebnisse entstehen als Publikationen, räumliche Formate, digitale Interfaces oder hybride Settings.</p>
-        </div>
-      </section>
-
-
-      <section class="section works">
-        <div class="works-head">
-          <p class="chapter-kicker">INDEX</p>
-          <p class="works-hint" id="works-hint">geöffnet</p>
-        </div>
-        <div class="works-grid" id="works-grid"></div>
+        <div class="project-grid" id="projectGrid"></div>
       </section>
     </main>
 
-    <aside class="story-drawer" id="story-drawer" aria-live="polite" aria-hidden="true">
-      <button class="drawer-close" id="drawer-close" type="button" aria-label="Schließen">X</button>
-      <div class="drawer-content" id="drawer-content"></div>
-    </aside>
+    <dialog class="project-dialog" id="projectDialog" aria-label="Projektansicht">
+      <button class="dialog-close" id="dialogClose" type="button" aria-label="Schließen">✕</button>
+      <div class="dialog-content" id="dialogContent"></div>
+    </dialog>
 
-    <script type="module" src="./app.js"></script>
-    <script type="module" src="./field.js"></script>
+    <footer class="pixel-footer">
+      <span>Claudia Mai</span>
+      <span>Postdigital Publishing / Bildsysteme / Lehre</span>
+      <span>2026</span>
+    </footer>
+
+    <script type="module" src="./pixel-site.js"></script>
   </body>
 </html>
