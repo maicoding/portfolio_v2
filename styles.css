@@ -23,8 +23,13 @@ body {
 }
 
 body {
-  background: radial-gradient(circle at 20% 12%, #1f1411 0%, var(--bg) 42%),
-    radial-gradient(circle at 80% 75%, #0e1f2a 0%, transparent 40%), var(--bg);
+  background:
+    linear-gradient(90deg, rgba(247, 63, 22, 0.11) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(47, 208, 255, 0.09) 1px, transparent 1px),
+    radial-gradient(circle at 11% 18%, rgba(240, 216, 17, 0.16) 0%, transparent 29%),
+    radial-gradient(circle at 78% 72%, rgba(47, 208, 255, 0.12) 0%, transparent 34%),
+    #070707;
+  background-size: 44px 44px, 44px 44px, auto, auto, auto;
   color: var(--text);
   font-family: "IBM Plex Mono", monospace;
   line-height: 1.45;
@@ -33,14 +38,6 @@ body {
 
 a {
   color: inherit;
-}
-
-#signal-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -3;
 }
 
 .noise-layer {
@@ -527,4 +524,313 @@ main {
   margin: 0;
   font-size: clamp(0.9rem, 1.2vw, 1.04rem);
   color: var(--text);
+}
+
+
+.postdigital-lab {
+  margin: clamp(1rem, 3vw, 2.8rem) 0 clamp(1.2rem, 4vw, 4rem);
+  border-top: 1px solid var(--signal-a);
+  border-bottom: 1px solid var(--signal-b);
+  padding: clamp(1rem, 3vw, 2rem) 0;
+  position: relative;
+  isolation: isolate;
+}
+
+.postdigital-lab::before,
+.postdigital-lab::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.postdigital-lab::before {
+  inset-block: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 9vw),
+    repeating-linear-gradient(0deg, rgba(240, 216, 17, 0.08) 0 1px, transparent 1px 3.2rem);
+}
+
+.postdigital-lab::after {
+  top: 18%;
+  height: 42%;
+  background: linear-gradient(90deg, rgba(247, 63, 22, 0.2), transparent 36%, rgba(47, 208, 255, 0.18));
+  mix-blend-mode: screen;
+  opacity: 0.36;
+}
+
+.lab-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  align-items: end;
+}
+
+.lab-head h2 {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2rem, 6vw, 6.6rem);
+  line-height: 0.88;
+  text-transform: uppercase;
+  max-width: 12ch;
+}
+
+.agent-shell {
+  margin-top: clamp(1rem, 2vw, 1.6rem);
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: 0.9rem;
+}
+
+.agent-console,
+.agent-output,
+.experiment-tile {
+  border: 1px solid var(--line);
+  background: rgba(7, 7, 7, 0.86);
+  backdrop-filter: blur(8px);
+}
+
+.agent-console {
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.9rem;
+}
+
+.agent-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--signal-c);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+}
+
+.agent-command {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.agent-command span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.agent-command input {
+  width: 100%;
+  min-height: 4.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: #050505;
+  color: var(--text);
+  font: inherit;
+  padding: 0.8rem;
+}
+
+.agent-command input:focus {
+  outline: 2px solid var(--signal-b);
+  outline-offset: 2px;
+}
+
+.agent-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.agent-actions button,
+.experiment-tile {
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.agent-actions button {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.65rem;
+  min-height: 2.9rem;
+}
+
+.agent-actions button:hover,
+.experiment-tile:hover {
+  border-color: var(--signal-c);
+  background: rgba(240, 216, 17, 0.08);
+}
+
+.agent-output {
+  min-height: 310px;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.85fr) minmax(220px, 1fr);
+  overflow: hidden;
+}
+
+.live-map {
+  position: relative;
+  min-height: 100%;
+  border-right: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 18px),
+    rgba(255, 255, 255, 0.02);
+}
+
+.live-map span {
+  position: absolute;
+  width: clamp(1.6rem, 4vw, 4.4rem);
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  color: var(--signal-b);
+  background: rgba(47, 208, 255, 0.06);
+  mix-blend-mode: screen;
+}
+
+.live-map span:nth-child(1) { left: 9%; top: 12%; }
+.live-map span:nth-child(2) { left: 46%; top: 8%; color: var(--signal-a); }
+.live-map span:nth-child(3) { left: 72%; top: 22%; }
+.live-map span:nth-child(4) { left: 22%; top: 46%; color: var(--signal-c); }
+.live-map span:nth-child(5) { left: 58%; top: 54%; color: var(--signal-a); }
+.live-map span:nth-child(6) { left: 81%; top: 68%; color: var(--signal-c); }
+.live-map span:nth-child(7) { left: 35%; top: 76%; }
+.live-map span:nth-child(8) { left: 8%; top: 80%; color: var(--signal-a); }
+
+.agent-feed {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  overflow: auto;
+  max-height: 420px;
+}
+
+.agent-feed p {
+  margin: 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-bottom: 0.55rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.agent-feed strong {
+  color: var(--text);
+}
+
+.experiment-grid {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.experiment-tile {
+  min-height: 118px;
+  padding: 0.8rem;
+  display: grid;
+  align-content: space-between;
+}
+
+.experiment-tile span {
+  color: var(--signal-c);
+  font-size: 0.72rem;
+}
+
+.experiment-tile strong {
+  font-family: "Syne", sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  line-height: 0.95;
+}
+
+body[data-mode="nervous"] .postdigital-lab,
+body[data-mode="game"] .postdigital-lab {
+  animation: lab-jitter 0.48s steps(2, end) infinite;
+}
+
+body[data-mode="forensic"] {
+  filter: grayscale(1) contrast(1.18);
+}
+
+body[data-mode="forensic"] .work-card {
+  background:
+    linear-gradient(90deg, rgba(240, 216, 17, 0.08), transparent),
+    #090909;
+}
+
+body[data-mode="anti"] .work-card:not(.is-postdigital) {
+  opacity: 0.18;
+  filter: blur(1px);
+}
+
+body[data-mode="publication"] .work-card:not(.is-publication) {
+  display: none;
+}
+
+body[data-mode="game"] .work-card.is-postdigital {
+  border-color: var(--signal-c);
+  box-shadow: inset 0 0 0 2px rgba(240, 216, 17, 0.34);
+}
+
+.work-card.is-postdigital::after {
+  content: attr(data-agent-tag);
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.65rem;
+  color: var(--signal-b);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  opacity: 0;
+}
+
+body[data-mode="nervous"] .work-card.is-postdigital::after,
+body[data-mode="forensic"] .work-card.is-postdigital::after,
+body[data-mode="game"] .work-card.is-postdigital::after {
+  opacity: 1;
+}
+
+body[data-mode="nervous"] .work-card.is-postdigital:nth-child(odd) {
+  transform: translate(0.35rem, -0.2rem) rotate(-0.7deg);
+}
+
+body[data-mode="nervous"] .work-card.is-postdigital:nth-child(even) {
+  transform: translate(-0.2rem, 0.35rem) rotate(0.8deg);
+}
+
+body[data-mode="tour"] .work-card.is-current {
+  border-color: var(--signal-a);
+  box-shadow: 0 0 0 1px var(--signal-a), 0 0 30px rgba(247, 63, 22, 0.34);
+}
+
+@keyframes lab-jitter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(2px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (max-width: 900px) {
+  .lab-head,
+  .agent-shell,
+  .agent-output {
+    grid-template-columns: 1fr;
+  }
+
+  .live-map {
+    min-height: 220px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .experiment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .agent-actions,
+  .experiment-grid {
+    grid-template-columns: 1fr;
+  }
 }

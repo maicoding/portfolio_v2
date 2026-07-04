@@ -13,8 +13,7 @@
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <canvas id="signal-canvas" aria-hidden="true"></canvas>
+  <body data-mode="index">
     <div class="noise-layer" aria-hidden="true"></div>
 
     <main class="minimal-main">
@@ -32,7 +31,77 @@
         </div>
       </section>
 
+      <section class="postdigital-lab" id="postdigital-lab" aria-labelledby="postdigital-title">
+        <div class="lab-head">
+          <p class="chapter-kicker">POSTDIGITALER TEIL</p>
+          <h2 id="postdigital-title">Interface als unruhiges Material</h2>
+        </div>
+
+        <div class="agent-shell">
+          <div class="agent-console" data-agent-panel>
+            <div class="agent-status">
+              <span data-agent-state>bereit</span>
+              <span data-agent-clock>00:00:00</span>
+            </div>
+            <label class="agent-command">
+              <span>Befehl</span>
+              <input
+                id="agent-input"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                value="mach die postdigitale Seite nervöser"
+              />
+            </label>
+            <div class="agent-actions" aria-label="Agenten-Modi">
+              <button type="button" data-agent-command="mach die postdigitale Seite nervöser">Nervös</button>
+              <button type="button" data-agent-command="zeige nur Publikationen">Publikation</button>
+              <button type="button" data-agent-command="starte einen autonomen Rundgang">Rundgang</button>
+              <button type="button" data-agent-command="mach alles forensisch">Forensisch</button>
+              <button type="button" data-agent-command="öffne die Anti Navigation">Anti Nav</button>
+            </div>
+          </div>
+
+          <div class="agent-output">
+            <div class="live-map" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="agent-feed" id="agent-feed" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="experiment-grid" aria-label="Postdigitale Experimente">
+          <button type="button" class="experiment-tile" data-agent-command="sortiere nach Störung">
+            <span>01</span>
+            <strong>Störsortierung</strong>
+          </button>
+          <button type="button" class="experiment-tile" data-agent-command="baue eine Ausstellung aus den digitalen Fremdkörpern">
+            <span>02</span>
+            <strong>Ausstellungsebene</strong>
+          </button>
+          <button type="button" class="experiment-tile" data-agent-command="markiere alles was Tool Ästhetik trägt">
+            <span>03</span>
+            <strong>Tool-Marker</strong>
+          </button>
+          <button type="button" class="experiment-tile" data-agent-command="mach daraus ein Spiel">
+            <span>04</span>
+            <strong>Spielzustand</strong>
+          </button>
+        </div>
+      </section>
+
       <section class="section works">
+        <div class="works-head">
+          <p class="chapter-kicker">ARCHIV</p>
+          <p class="works-hint" id="works-hint">Alle Projekte sichtbar</p>
+        </div>
         <div class="works-grid" id="works-grid"></div>
       </section>
     </main>
