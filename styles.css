@@ -773,7 +773,7 @@ body[data-mode="game"] .work-card.is-postdigital {
 }
 
 .work-card.is-postdigital::after {
-  content: attr(data-agent-tag);
+  content: attr(data-field-tag);
   position: absolute;
   left: 0.7rem;
   bottom: 0.65rem;
@@ -1220,5 +1220,164 @@ main.minimal-main {
 
   .experiment-tile {
     border-right: 0;
+  }
+}
+
+
+.portfolio-field {
+  min-height: calc(100vh - 1rem);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(244, 240, 232, 0.28);
+  background: #050505;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 24vw);
+  grid-template-rows: 1fr auto;
+}
+
+#portfolio-webgl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.field-copy {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  padding: clamp(1rem, 3vw, 3rem);
+  max-width: 760px;
+  mix-blend-mode: difference;
+}
+
+.field-copy h1 {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(4.6rem, 16vw, 15.5rem);
+  line-height: 0.72;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.field-copy p {
+  margin: 1rem 0 0;
+  max-width: 30ch;
+  font-size: clamp(1rem, 1.8vw, 1.55rem);
+  color: #f4f0e8;
+}
+
+.field-index {
+  position: relative;
+  z-index: 3;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  border-left: 1px solid rgba(244, 240, 232, 0.34);
+  background: rgba(5, 5, 5, 0.54);
+  backdrop-filter: blur(14px);
+}
+
+.field-index button {
+  width: 100%;
+  min-height: 4.25rem;
+  border: 0;
+  border-top: 1px solid rgba(244, 240, 232, 0.28);
+  background: transparent;
+  color: #f4f0e8;
+  font: 700 0.92rem/1.05 "IBM Plex Mono", monospace;
+  text-align: left;
+  text-transform: uppercase;
+  padding: 0.7rem 0.85rem;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.field-index button:hover {
+  background: #f4f0e8;
+  color: #050505;
+}
+
+.field-index span {
+  color: #f73f16;
+}
+
+.field-controls {
+  position: relative;
+  z-index: 4;
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0 clamp(1rem, 3vw, 3rem) clamp(1rem, 2vw, 2rem);
+}
+
+.field-controls button {
+  min-width: 9rem;
+  border: 1px solid rgba(244, 240, 232, 0.5);
+  background: rgba(5, 5, 5, 0.62);
+  color: #f4f0e8;
+  font: 700 0.78rem/1 "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+
+.field-controls button:hover,
+.field-controls button.is-active {
+  background: #f0d811;
+  border-color: #f0d811;
+  color: #050505;
+}
+
+.postdigital-lab {
+  display: none;
+}
+
+.site-brief {
+  margin-top: clamp(2rem, 5vw, 5rem);
+}
+
+body[data-mode="forensic"] {
+  filter: none;
+}
+
+@media (max-width: 900px) {
+  .portfolio-field {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(62vh, 1fr) auto auto;
+  }
+
+  .field-index {
+    grid-column: 1;
+    grid-row: 3;
+    border-left: 0;
+    border-top: 1px solid rgba(244, 240, 232, 0.34);
+  }
+
+  .field-index button {
+    min-height: 3.6rem;
+  }
+
+  .field-controls {
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .field-copy h1 {
+    font-size: clamp(3.4rem, 22vw, 6rem);
+  }
+
+  .field-controls button {
+    min-width: 50%;
+    flex: 1 1 50%;
   }
 }

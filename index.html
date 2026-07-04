@@ -17,69 +17,19 @@
     <div class="noise-layer" aria-hidden="true"></div>
 
     <main class="minimal-main">
-      <section class="postdigital-lab" id="postdigital-lab" aria-labelledby="postdigital-title">
-        <div class="lab-head">
-          <p class="chapter-kicker">PD/CTRL</p>
-          <h2 id="postdigital-title">Die Seite frisst ihre Ordnung</h2>
+      <section class="portfolio-field" id="portfolio-field" aria-labelledby="portfolio-title">
+        <canvas id="portfolio-webgl" aria-hidden="true"></canvas>
+        <div class="field-copy">
+          <h1 id="portfolio-title">Claudia Mai</h1>
+          <p>Postdigital Publishing, Bildsysteme, Lehre</p>
         </div>
-
-        <div class="agent-shell">
-          <div class="agent-console" data-agent-panel>
-            <div class="agent-status">
-              <span data-agent-state>bereit</span>
-              <span data-agent-clock>00:00:00</span>
-            </div>
-            <label class="agent-command">
-              <span>&gt;</span>
-              <input
-                id="agent-input"
-                type="text"
-                autocomplete="off"
-                spellcheck="false"
-                value="zerleg die ordnung"
-              />
-            </label>
-            <div class="agent-actions" aria-label="Modi">
-              <button type="button" data-agent-command="zerleg die ordnung">BRUCH</button>
-              <button type="button" data-agent-command="zeige nur Publikationen">PRINT</button>
-              <button type="button" data-agent-command="starte einen autonomen Rundgang">SCAN</button>
-              <button type="button" data-agent-command="mach alles forensisch">S/W</button>
-              <button type="button" data-agent-command="öffne die Anti Navigation">LOCH</button>
-            </div>
-          </div>
-
-          <div class="agent-output">
-            <div class="live-map" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="agent-feed" id="agent-feed" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <div class="experiment-grid" aria-label="Schalter">
-          <button type="button" class="experiment-tile" data-agent-command="sortiere nach Störung">
-            <span>01</span>
-            <strong>RISS</strong>
-          </button>
-          <button type="button" class="experiment-tile" data-agent-command="baue eine Ausstellung aus den digitalen Fremdkörpern">
-            <span>02</span>
-            <strong>SCHICHT</strong>
-          </button>
-          <button type="button" class="experiment-tile" data-agent-command="markiere alles was Tool Ästhetik trägt">
-            <span>03</span>
-            <strong>WERKZEUGHAUT</strong>
-          </button>
-          <button type="button" class="experiment-tile" data-agent-command="mach daraus ein Spiel">
-            <span>04</span>
-            <strong>SPIELFELD</strong>
-          </button>
+        <div class="field-index" id="field-index" aria-label="Ausgewählte Arbeiten"></div>
+        <div class="field-controls" aria-label="Ansicht">
+          <button type="button" data-field-mode="all">Alle</button>
+          <button type="button" data-field-mode="publishing">Publikation</button>
+          <button type="button" data-field-mode="image">Bild</button>
+          <button type="button" data-field-mode="data">Daten</button>
+          <button type="button" data-field-mode="space">Raum</button>
         </div>
       </section>
 
@@ -113,5 +63,6 @@
     </aside>
 
     <script type="module" src="./app.js"></script>
+    <script type="module" src="./field.js"></script>
   </body>
 </html>
