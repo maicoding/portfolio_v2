@@ -1,3 +1,35 @@
+@font-face {
+  font-family: "FlorDeRuinaRuina";
+  src: url("./assets/fonts/florderuina-ruina.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FlorDeRuinaFractura";
+  src: url("./assets/fonts/florderuina-fractura.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "FlorDeRuinaFlor";
+  src: url("./assets/fonts/florderuina-flor.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Velvelyne";
+  src: url("./assets/fonts/velvelyne-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #0a0a0a;
   --bg-soft: #121212;
@@ -1288,7 +1320,7 @@ main.minimal-main {
   border-top: 1px solid rgba(244, 240, 232, 0.28);
   background: transparent;
   color: #f4f0e8;
-  font: 700 0.92rem/1.05 "IBM Plex Mono", monospace;
+  font: 700 0.86rem/1.05 "Velvelyne", "IBM Plex Mono", monospace;
   text-align: left;
   text-transform: uppercase;
   padding: 0.7rem 0.85rem;
@@ -1324,7 +1356,7 @@ main.minimal-main {
   border: 1px solid rgba(244, 240, 232, 0.5);
   background: rgba(5, 5, 5, 0.62);
   color: #f4f0e8;
-  font: 700 0.78rem/1 "IBM Plex Mono", monospace;
+  font: 700 0.74rem/1 "Velvelyne", "IBM Plex Mono", monospace;
   text-transform: uppercase;
   padding: 0.85rem 1rem;
   cursor: pointer;
@@ -1626,7 +1658,7 @@ body[data-field-effect="repair"] .field-index button.is-focus {
   display: block;
   grid-row: 1 / span 2;
   color: #d8ff5c;
-  font: 700 0.72rem/1 "IBM Plex Mono", monospace;
+  font: 700 0.72rem/1 "Velvelyne", "IBM Plex Mono", monospace;
   padding-top: 0.18em;
 }
 
@@ -1648,7 +1680,7 @@ body[data-field-effect="repair"] .field-index button.is-focus {
   min-width: 0;
   margin-top: 0.38rem;
   color: rgba(244, 240, 232, 0.54);
-  font: 500 0.68rem/1.08 "IBM Plex Mono", monospace;
+  font: 700 0.68rem/1.08 "Velvelyne", "IBM Plex Mono", monospace;
   font-style: normal;
   text-transform: uppercase;
   overflow-wrap: anywhere;
@@ -1687,5 +1719,197 @@ body[data-field-effect="repair"] .field-index button.is-focus {
     width: 100%;
     box-shadow: none;
     border-top: 1px solid rgba(244, 240, 232, 0.2);
+  }
+}
+
+
+.portfolio-field {
+  font-family: "Velvelyne", "IBM Plex Mono", monospace;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 19vw);
+  background:
+    linear-gradient(90deg, rgba(216, 255, 92, 0.08) 0 1px, transparent 1px),
+    linear-gradient(0deg, rgba(244, 240, 232, 0.06) 0 1px, transparent 1px),
+    #030303;
+  background-size: 9.5vw 100%, 100% 11.5vh, auto;
+}
+
+.field-copy {
+  align-self: start;
+  max-width: 28rem;
+  padding: clamp(0.9rem, 2.2vw, 2rem);
+  mix-blend-mode: normal;
+}
+
+.field-copy h1 {
+  font-family: "Velvelyne", "IBM Plex Mono", monospace;
+  font-size: clamp(1rem, 2.1vw, 2.05rem);
+  line-height: 0.96;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: #f4f0e8;
+}
+
+.field-copy p {
+  margin-top: 0.48rem;
+  max-width: 36ch;
+  font-family: "Velvelyne", "IBM Plex Mono", monospace;
+  font-size: clamp(0.74rem, 0.9vw, 0.92rem);
+  line-height: 1.12;
+  color: rgba(244, 240, 232, 0.72);
+}
+
+.field-type-system {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.field-type-system span {
+  position: absolute;
+  font-family: "FlorDeRuinaFlor", "FlorDeRuinaRuina", serif;
+  font-size: clamp(4rem, 11vw, 12rem);
+  line-height: 0.7;
+  color: rgba(244, 240, 232, 0.12);
+  text-shadow: 0 0 18px rgba(216, 255, 92, 0.22);
+}
+
+.field-type-system span:nth-child(1) { left: 9vw; top: 14vh; }
+.field-type-system span:nth-child(2) { right: 25vw; top: 8vh; color: rgba(216, 255, 92, 0.2); }
+.field-type-system span:nth-child(3) { left: 43vw; top: 38vh; color: rgba(15, 255, 215, 0.18); }
+.field-type-system span:nth-child(4) { left: 18vw; bottom: 13vh; color: rgba(244, 240, 232, 0.18); }
+.field-type-system span:nth-child(5) { right: 30vw; bottom: 17vh; color: rgba(216, 255, 92, 0.16); }
+.field-type-system span:nth-child(6) { left: 52vw; top: 19vh; color: rgba(244, 240, 232, 0.12); }
+
+.field-measure {
+  position: absolute;
+  left: clamp(1rem, 3vw, 3rem);
+  right: min(24vw, 22rem);
+  bottom: clamp(4.8rem, 9vh, 7.2rem);
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(216, 255, 92, 0.6);
+  color: rgba(216, 255, 92, 0.78);
+  font-family: "Velvelyne", "IBM Plex Mono", monospace;
+  font-size: clamp(0.62rem, 0.82vw, 0.78rem);
+  line-height: 1;
+  text-transform: uppercase;
+  padding-top: 0.45rem;
+}
+
+.field-orbit {
+  inset: clamp(7.8rem, 14vh, 10rem) clamp(18rem, 24vw, 28rem) clamp(8.5rem, 17vh, 12rem) clamp(1rem, 4vw, 4rem);
+  justify-content: center;
+}
+
+.field-work {
+  grid-template-columns: 3rem minmax(0, 1fr);
+  border-bottom: 1px solid rgba(216, 255, 92, 0.18);
+  color: rgba(244, 240, 232, 0.64);
+  padding: clamp(0.28rem, 0.58vh, 0.5rem) 0;
+}
+
+.field-work strong {
+  font-family: "FlorDeRuinaFractura", "FlorDeRuinaRuina", "Syne", sans-serif;
+  font-size: clamp(1.2rem, 2.65vw, 3.6rem);
+  line-height: 0.82;
+  text-transform: none;
+}
+
+.field-work em,
+.field-work span,
+.field-index button,
+.field-controls button {
+  font-family: "Velvelyne", "IBM Plex Mono", monospace;
+  letter-spacing: 0;
+}
+
+.field-work.is-focus strong {
+  font-family: "FlorDeRuinaFlor", "FlorDeRuinaFractura", serif;
+  font-size: clamp(2rem, 5.45vw, 7rem);
+  line-height: 0.66;
+}
+
+.field-index {
+  background: rgba(3, 3, 3, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.field-index button {
+  min-height: 3.25rem;
+  font-size: 0.74rem;
+  border-top: 1px solid rgba(216, 255, 92, 0.24);
+}
+
+.field-controls {
+  padding-bottom: clamp(1rem, 2vw, 1.7rem);
+}
+
+.field-controls button {
+  min-width: 8.2rem;
+  border-color: rgba(216, 255, 92, 0.44);
+  font-size: 0.68rem;
+}
+
+body[data-field-effect] .field-controls button.is-active,
+body[data-field-effect] .field-index button.is-focus {
+  background: #d8ff5c;
+  color: #030303;
+}
+
+@media (max-width: 980px) {
+  .field-measure {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin: 0 1rem 1rem;
+    flex-direction: column;
+  }
+
+  .field-orbit {
+    padding: 0 1rem 1rem;
+  }
+
+  .field-work strong,
+  .field-work.is-focus strong {
+    font-size: clamp(1.35rem, 9vw, 3.7rem);
+    line-height: 0.78;
+  }
+}
+
+
+.story-drawer {
+  right: auto;
+  left: 100%;
+  transform: none;
+}
+
+.story-drawer.is-open {
+  transform: translateX(-100%);
+}
+
+
+.story-drawer[aria-hidden="true"] {
+  display: none;
+}
+
+.story-drawer.is-open {
+  display: grid;
+}
+
+
+.field-signal span {
+  left: 0;
+  transform: translateX(-120%);
+}
+
+
+@media (max-width: 980px) {
+  .field-signal {
+    display: none;
   }
 }

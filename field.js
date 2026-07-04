@@ -143,7 +143,61 @@ scene.add(background);
 const startTime = performance.now();
 const objects = [];
 const links = [];
+const glyphSprites = [];
 let targetSpin = 0;
+
+const glyphs = ["☆", "☾", "☽", "⚐", "❤", "✨", "01", "↯", "○", "▵"];
+
+const makeGlyphTexture = (glyph, i) => {
+  const c = document.createElement("canvas");
+  c.width = 512;
+  c.height = 512;
+  const ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, c.width, c.height);
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = i % 3 === 0 ? "#d8ff5c" : i % 3 === 1 ? "#f4f0e8" : "#0fffd7";
+  ctx.font = glyph.length > 1 ? "128px Velvelyne, monospace" : "240px FlorDeRuinaFlor, serif";
+  ctx.fillText(glyph, 256, 264);
+  ctx.strokeStyle = "rgba(244, 240, 232, 0.34)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(44, 256);
+  ctx.lineTo(468, 256);
+  ctx.moveTo(256, 44);
+  ctx.lineTo(256, 468);
+  ctx.stroke();
+  const texture = new THREE.CanvasTexture(c);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  return texture;
+};
+
+glyphs.forEach((glyph, i) => {
+  const angle = (i / glyphs.length) * Math.PI * 2;
+  const sprite = new THREE.Sprite(
+    new THREE.SpriteMaterial({
+      map: makeGlyphTexture(glyph, i),
+      transparent: true,
+      opacity: 0.28,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    })
+  );
+  const radius = 6.8 + (i % 4) * 0.7;
+  sprite.position.set(Math.cos(angle) * radius, Math.sin(angle * 1.22) * 3.2, -1 + Math.sin(angle) * 4.4);
+  sprite.scale.setScalar(1.1 + (i % 4) * 0.42);
+  group.add(sprite);
+  glyphSprites.push({ sprite, base: sprite.position.clone(), glyph, phase: i * 0.74 });
+});
+
+document.fonts?.ready.then(() => {
+  glyphSprites.forEach((item, i) => {
+    item.sprite.material.map.dispose();
+    item.sprite.material.map = makeGlyphTexture(item.glyph, i);
+    item.sprite.material.needsUpdate = true;
+  });
+});
 
 projects.forEach((project, i) => {
   const angle = (i / projects.length) * Math.PI * 2;
@@ -307,8 +361,10 @@ motion.add({ reduce: "(prefers-reduced-motion: reduce)", motion: "(prefers-reduc
     .from(".field-copy h1", { yPercent: 28, autoAlpha: 0, duration: 1.1 })
     .from(".field-copy p", { y: 18, autoAlpha: 0, duration: 0.7 }, "<0.18")
     .from(".field-controls button", { y: 22, autoAlpha: 0, stagger: 0.055, duration: 0.58 }, "<0.12")
+    .from(".field-type-system span", { scale: 0.4, rotate: 18, autoAlpha: 0, stagger: 0.06, duration: 0.78 }, "<0.05")
     .from(".field-work", { autoAlpha: 0, stagger: 0.055, duration: 0.7 }, "<0.18")
     .from("#field-index button", { x: 46, autoAlpha: 0, stagger: 0.045, duration: 0.62 }, "<0.1");
+  gsap.to(".field-type-system span", { y: "random(-18,18)", x: "random(-10,10)", rotate: "random(-5,5)", duration: 2.8, repeat: -1, yoyo: true, stagger: 0.12, ease: "sine.inOut" });
   gsap.to(".field-signal", { autoAlpha: 0.74, duration: 1.2, repeat: -1, yoyo: true, ease: "sine.inOut" });
 });
 
@@ -344,6 +400,15 @@ const animate = () => {
   group.rotation.z = Math.sin(time * 0.2) * 0.04;
   background.material.uniforms.time.value = time;
   particles.rotation.y = time * 0.025;
+  glyphSprites.forEach((item, i) => {
+    const pulse = Math.sin(time * 0.9 + item.phase);
+    item.sprite.position.x = item.base.x + pulse * 0.34;
+    item.sprite.position.y = item.base.y + Math.cos(time * 0.7 + item.phase) * 0.26;
+    item.sprite.position.z = item.base.z + Math.sin(time * 0.44 + i) * 0.72;
+    item.sprite.material.opacity = 0.16 + Math.abs(pulse) * 0.24;
+    item.sprite.rotation.z = Math.sin(time * 0.28 + item.phase) * 0.18;
+    item.sprite.scale.setScalar(1.05 + (i % 4) * 0.36 + Math.abs(pulse) * 0.18);
+  });
 
   objects.forEach((object, i) => {
     const energy = object.active * (0.62 + object.focus * 0.72);
