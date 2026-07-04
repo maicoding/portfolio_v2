@@ -71,23 +71,23 @@ const openDrawer = (projectId) => {
     ${mediaHtml}
 
     <section class="story-block">
-      <h3>Reiz</h3>
+      <h3>Frage</h3>
       <p>${escapeHtml(project.hook)}</p>
     </section>
     <section class="story-block">
-      <h3>Lage</h3>
+      <h3>Kontext</h3>
       <p>${escapeHtml(project.context)}</p>
     </section>
     <section class="story-block">
-      <h3>Material</h3>
+      <h3>Verfahren</h3>
       <p>${escapeHtml(project.process)}</p>
     </section>
     <section class="story-block">
-      <h3>Rest</h3>
+      <h3>Ergebnis</h3>
       <p>${escapeHtml(project.outcome)}</p>
     </section>
     <section class="story-block">
-      <h3>Spur</h3>
+      <h3>Rahmen</h3>
       <p>${escapeHtml(project.credits)}</p>
     </section>
   `;
