@@ -10,17 +10,20 @@
     <script type="module" src="./kompetenzmatrix.js"></script>
   </head>
   <body class="matrix-page">
-    <div class="matrix-glyph-field" aria-hidden="true">
-      <span>☆</span><span>☾</span><span>⚐</span><span>❤</span><span>☽</span><span>✨</span><span>○</span><span>01</span>
-    </div>
+    <canvas id="matrixLiquidCanvas" class="matrix-liquid-canvas" aria-hidden="true"></canvas>
     <main class="matrix-shell" aria-label="Kompetenzmatrix Gestaltung mit KI">
       <header class="matrix-head">
-        <a class="matrix-back" href="./index.html">Claudia Mai</a>
+        <a class="matrix-back" href="./index.html">← home</a>
         <div>
-          <h1>Kompetenz<br />Matrix</h1>
-          <p>Gestaltung mit KI. Verschiebungen aus der früheren Matrix, erweitert um Ableitungen aus Design Unlimited.</p>
+          <h1>Kompetenzmatrix.gif</h1>
+          <p>Gestaltung mit KI / Daten / Systeme / Urteilskraft / seit 1996 online</p>
         </div>
       </header>
+
+      <section class="matrix-liquid-stage" aria-label="Flüssige Textfläche">
+        <div class="matrix-window-bar"><span>liquid-text.exe</span><span>□ ×</span></div>
+        <div class="matrix-liquid-label">Text berühren / Statements wischen</div>
+      </section>
 
       <section class="matrix-statement-zone" aria-label="Abgeleitete Statements">
         <div class="swipe matrix-swipe" id="statementSwipe">

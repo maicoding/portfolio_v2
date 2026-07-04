@@ -2625,3 +2625,304 @@ body.matrix-page {
 .matrix-glyph-field {
   contain: paint;
 }
+
+
+body.matrix-page {
+  background:
+    repeating-linear-gradient(0deg, #c0c0c0 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 255, 0.18) 0 1px, transparent 1px 18px),
+    #00ffff;
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.matrix-glyph-field {
+  display: none;
+}
+
+.matrix-liquid-canvas {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: min(72vh, 46rem);
+  z-index: 0;
+  image-rendering: pixelated;
+}
+
+.matrix-page .matrix-shell {
+  color: #000000;
+  background: transparent;
+}
+
+.matrix-page .matrix-head {
+  min-height: min(72vh, 46rem);
+  border: 0;
+  padding: 0.65rem;
+  align-items: start;
+  grid-template-columns: 9rem minmax(0, 1fr);
+}
+
+.matrix-page .matrix-back {
+  position: relative;
+  z-index: 4;
+  display: inline-block;
+  width: fit-content;
+  padding: 0.18rem 0.35rem;
+  background: #ffff00;
+  color: #0000ee;
+  border: 2px outset #ffffff;
+  font: 700 0.92rem/1 "Courier New", monospace;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.matrix-page .matrix-head h1 {
+  position: relative;
+  z-index: 3;
+  width: fit-content;
+  max-width: 12ch;
+  margin-top: 0;
+  padding: 0.35rem 0.6rem;
+  background: #c0c0c0;
+  color: #000000;
+  border: 3px outset #ffffff;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(2.4rem, 7vw, 7rem);
+  line-height: 0.9;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 2px 2px #ff00ff;
+}
+
+.matrix-page .matrix-head p {
+  position: relative;
+  z-index: 3;
+  width: fit-content;
+  max-width: 50rem;
+  padding: 0.3rem 0.45rem;
+  background: #ffff00;
+  color: #000000;
+  border: 2px dashed #0000ee;
+  font: 700 clamp(0.82rem, 1.1vw, 1.05rem)/1.15 "Courier New", monospace;
+}
+
+.matrix-liquid-stage {
+  position: absolute;
+  inset: 4.8rem 0 auto;
+  height: min(58vh, 38rem);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.matrix-window-bar {
+  position: absolute;
+  left: clamp(0.8rem, 3vw, 3rem);
+  right: clamp(0.8rem, 3vw, 3rem);
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.28rem 0.5rem;
+  background: #000080;
+  color: #ffffff;
+  border: 2px outset #ffffff;
+  font: 700 0.82rem/1 "Courier New", monospace;
+}
+
+.matrix-liquid-label {
+  position: absolute;
+  right: clamp(0.8rem, 3vw, 3rem);
+  bottom: 1rem;
+  padding: 0.25rem 0.4rem;
+  background: #ff00ff;
+  color: #ffffff;
+  border: 2px outset #ffffff;
+  font: 700 0.78rem/1 "Courier New", monospace;
+}
+
+.matrix-page .matrix-statement-zone {
+  background: #ffffff;
+  border-block: 4px ridge #c0c0c0;
+  grid-template-columns: minmax(0, 1fr) 5rem;
+}
+
+.matrix-page .matrix-slide {
+  min-height: 18rem;
+  padding: clamp(0.8rem, 2vw, 1.8rem);
+}
+
+.matrix-page .matrix-slide span {
+  color: #ff00ff;
+  font: 900 1rem/1 "Courier New", monospace;
+}
+
+.matrix-page .matrix-slide h2 {
+  max-width: 18ch;
+  color: #0000ee;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(2.2rem, 6vw, 6.5rem);
+  line-height: 0.9;
+  text-decoration: underline;
+  text-shadow: 2px 2px #00ff00;
+}
+
+.matrix-page .matrix-slide p {
+  color: #000000;
+  font: 700 clamp(0.95rem, 1.25vw, 1.25rem)/1.25 "Courier New", monospace;
+}
+
+.matrix-page .matrix-swipe-controls {
+  background: #c0c0c0;
+  border-left: 3px ridge #ffffff;
+}
+
+.matrix-page .matrix-swipe-controls button {
+  background: #c0c0c0;
+  color: #000000;
+  border: 2px outset #ffffff;
+  font-family: "Courier New", monospace;
+}
+
+.matrix-page .matrix-swipe-controls button:hover {
+  background: #ffff00;
+  color: #0000ee;
+}
+
+.matrix-page .matrix-dots {
+  border-block: 2px inset #ffffff;
+}
+
+.matrix-page .matrix-dots span {
+  border-color: #000000;
+}
+
+.matrix-page .matrix-dots span.is-active {
+  background: #ff00ff;
+  border-color: #000000;
+}
+
+.matrix-page .matrix-board {
+  min-height: 100rem;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 0, 0.28) 0 1px, transparent 1px 12px),
+    #ffffff;
+  border-bottom: 4px ridge #c0c0c0;
+}
+
+.matrix-page .matrix-column-heads {
+  border-bottom: 3px ridge #c0c0c0;
+  background: #000080;
+}
+
+.matrix-page .matrix-column-heads span {
+  color: #ffffff;
+  font: 900 0.86rem/1 "Courier New", monospace;
+  text-decoration: underline;
+}
+
+.matrix-page .matrix-lane {
+  border-bottom: 1px dotted #0000ee;
+}
+
+.matrix-page .matrix-lane > div {
+  color: #000000;
+  font: 700 clamp(0.68rem, 0.82vw, 0.88rem)/1.1 "Courier New", monospace;
+}
+
+.matrix-page .matrix-lane > div:nth-child(2) {
+  border-inline: 2px dotted #ff00ff;
+}
+
+.matrix-page .matrix-links path {
+  stroke: #0000ee;
+  stroke-width: 1.5;
+}
+
+.matrix-page .matrix-node {
+  width: clamp(5.4rem, 6.8vw, 7.6rem);
+  background: #ffff00;
+  color: #000000;
+  border: 3px outset #ffffff;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #ff00ff;
+  backdrop-filter: none;
+}
+
+.matrix-page .matrix-node span {
+  font: 900 clamp(0.56rem, 0.7vw, 0.82rem)/0.96 "Courier New", monospace;
+  text-transform: uppercase;
+}
+
+.matrix-page .matrix-node:hover,
+.matrix-page .matrix-node.is-active {
+  background: #0000ee;
+  color: #ffffff;
+  border-color: #00ff00;
+  box-shadow: 4px 4px 0 #00ff00;
+}
+
+.matrix-page .matrix-detail {
+  background: #c0c0c0;
+  color: #000000;
+  border-top: 4px ridge #ffffff;
+  grid-template-columns: minmax(0, 0.65fr) minmax(0, 1fr);
+}
+
+.matrix-page .matrix-source {
+  color: #0000ee;
+  font: 900 0.78rem/1 "Courier New", monospace;
+  text-decoration: underline;
+}
+
+.matrix-page .matrix-detail h2 {
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(2.6rem, 7vw, 8rem);
+  line-height: 0.84;
+  text-shadow: 2px 2px #ff00ff;
+}
+
+.matrix-page .matrix-detail div {
+  border-top: 3px ridge #ffffff;
+}
+
+.matrix-page .matrix-detail dt {
+  color: #0000ee;
+  font: 900 0.74rem/1 "Courier New", monospace;
+}
+
+.matrix-page .matrix-detail dd {
+  color: #000000;
+  font: 700 clamp(0.95rem, 1.2vw, 1.2rem)/1.25 "Courier New", monospace;
+}
+
+@media (max-width: 920px) {
+  .matrix-liquid-canvas {
+    height: 34rem;
+  }
+
+  .matrix-page .matrix-head {
+    min-height: 34rem;
+    grid-template-columns: 1fr;
+  }
+
+  .matrix-liquid-stage {
+    inset: 8rem 0 auto;
+    height: 24rem;
+  }
+
+  .matrix-page .matrix-statement-zone {
+    grid-template-columns: 1fr;
+  }
+
+  .matrix-page .matrix-slide {
+    min-height: 20rem;
+  }
+
+  .matrix-page .matrix-board {
+    min-height: 126rem;
+  }
+
+  .matrix-page .matrix-detail {
+    grid-template-columns: 1fr;
+  }
+}

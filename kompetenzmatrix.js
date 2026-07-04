@@ -1,3 +1,5 @@
+import * as THREE from "https://unpkg.com/three@0.185.0/build/three.module.js";
+
 const statements = [
   {
     title: "Daten werden Material",
@@ -48,6 +50,7 @@ const rows = [
 
 let activeId = rows[0].id;
 let swipe = null;
+let liquidText = statements[0].title;
 
 const lanes = document.getElementById("matrixLanes");
 const links = document.getElementById("matrixLinks");
@@ -135,6 +138,163 @@ window.addEventListener("load", () => {
     continuous: true,
     callback(index) {
       dots.querySelectorAll("span").forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+      liquidText = statements[index]?.title || liquidText;
+      updateLiquidText(liquidText);
     }
   });
 });
+
+
+const liquidCanvas = document.getElementById("matrixLiquidCanvas");
+let liquidRenderer = null;
+let liquidScene = null;
+let liquidCamera = null;
+let liquidMesh = null;
+let liquidTexture = null;
+let liquidStart = performance.now();
+const liquidPointer = { x: 0.5, y: 0.5, power: 0 };
+
+function makeTextTexture(text) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 2048;
+  canvas.height = 768;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#0018ff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#00ff00";
+  ctx.lineWidth = 10;
+  ctx.strokeRect(18, 18, canvas.width - 36, canvas.height - 36);
+  ctx.fillStyle = "#ffff00";
+  ctx.font = "900 78px 'Times New Roman', serif";
+  ctx.fillText("claudia mai / kompetenzmatrix / text wird flüssig", 70, 100);
+  ctx.fillStyle = "#ff00ff";
+  ctx.font = "900 112px 'Courier New', monospace";
+  ctx.fillText("<<<", 70, 218);
+  ctx.fillText(">>>", 1740, 218);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "900 210px 'Times New Roman', serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  const words = text.toUpperCase().split(" ");
+  const lineA = words.slice(0, Math.ceil(words.length / 2)).join(" ");
+  const lineB = words.slice(Math.ceil(words.length / 2)).join(" ");
+  ctx.fillText(lineA, 1024, 360, 1840);
+  ctx.fillText(lineB || " ", 1024, 570, 1840);
+  ctx.strokeStyle = "#ff00ff";
+  ctx.lineWidth = 5;
+  ctx.strokeText(lineA, 1024, 360, 1840);
+  ctx.strokeText(lineB || " ", 1024, 570, 1840);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  return texture;
+}
+
+function initLiquidText() {
+  if (!liquidCanvas) return;
+  liquidRenderer = new THREE.WebGLRenderer({ canvas: liquidCanvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+  liquidRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+  liquidRenderer.outputColorSpace = THREE.SRGBColorSpace;
+  liquidScene = new THREE.Scene();
+  liquidCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  liquidTexture = makeTextTexture(liquidText);
+  liquidMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(2, 2, 160, 80),
+    new THREE.ShaderMaterial({
+      uniforms: {
+        tex: { value: liquidTexture },
+        time: { value: 0 },
+        pointer: { value: new THREE.Vector2(0.5, 0.5) },
+        power: { value: 0 },
+        resolution: { value: new THREE.Vector2(1, 1) }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        uniform float time;
+        uniform vec2 pointer;
+        uniform float power;
+        float wave(vec2 p) {
+          return sin(p.x * 18.0 + time * 1.7) * 0.025 + sin((p.x + p.y) * 24.0 - time * 2.1) * 0.018;
+        }
+        void main() {
+          vUv = uv;
+          vec3 pos = position;
+          float d = distance(uv, pointer);
+          float pull = smoothstep(0.45, 0.0, d) * power;
+          pos.x += wave(uv) + (uv.x - pointer.x) * pull * 0.18;
+          pos.y += wave(uv.yx) - (uv.y - pointer.y) * pull * 0.14;
+          pos.z += pull * 0.12;
+          gl_Position = vec4(pos, 1.0);
+        }
+      `,
+      fragmentShader: `
+        precision highp float;
+        varying vec2 vUv;
+        uniform sampler2D tex;
+        uniform float time;
+        uniform vec2 pointer;
+        uniform float power;
+        float hash(vec2 p) { return fract(sin(dot(p, vec2(41.0, 289.0))) * 43758.5453); }
+        void main() {
+          vec2 uv = vUv;
+          float d = distance(uv, pointer);
+          float melt = smoothstep(0.55, 0.0, d) * power;
+          uv.x += sin(uv.y * 42.0 + time * 2.4) * (0.008 + melt * 0.045);
+          uv.y += sin(uv.x * 34.0 - time * 2.0) * (0.006 + melt * 0.034);
+          uv.y += melt * sin(time * 1.5 + uv.x * 18.0) * 0.06;
+          vec4 col = texture2D(tex, uv);
+          vec4 r = texture2D(tex, uv + vec2(0.006 + melt * 0.018, 0.0));
+          vec4 b = texture2D(tex, uv - vec2(0.006 + melt * 0.018, 0.0));
+          col.r = r.r;
+          col.b = b.b;
+          col.rgb += hash(gl_FragCoord.xy + time) * 0.045;
+          col.rgb *= 0.9 + 0.1 * sin(vUv.y * 900.0);
+          gl_FragColor = col;
+        }
+      `
+    })
+  );
+  liquidScene.add(liquidMesh);
+  resizeLiquidText();
+  window.addEventListener("pointermove", (event) => {
+    const rect = liquidCanvas.getBoundingClientRect();
+    liquidPointer.x = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+    liquidPointer.y = 1 - Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+    liquidPointer.power = event.clientY <= rect.bottom ? 1 : 0.22;
+  });
+  window.addEventListener("pointerleave", () => {
+    liquidPointer.power = 0;
+  });
+  window.addEventListener("resize", resizeLiquidText);
+  animateLiquidText();
+}
+
+function updateLiquidText(text) {
+  if (!liquidMesh) return;
+  const next = makeTextTexture(text);
+  liquidTexture?.dispose();
+  liquidTexture = next;
+  liquidMesh.material.uniforms.tex.value = next;
+}
+
+function resizeLiquidText() {
+  if (!liquidRenderer || !liquidCanvas) return;
+  const width = liquidCanvas.clientWidth || window.innerWidth;
+  const height = liquidCanvas.clientHeight || Math.round(window.innerHeight * 0.58);
+  liquidRenderer.setSize(width, height, false);
+  liquidMesh.material.uniforms.resolution.value.set(width, height);
+}
+
+function animateLiquidText() {
+  if (!liquidRenderer) return;
+  const time = (performance.now() - liquidStart) / 1000;
+  liquidPointer.power += ((liquidPointer.power > 0 ? liquidPointer.power : 0) - liquidMesh.material.uniforms.power.value) * 0.08;
+  liquidMesh.material.uniforms.time.value = time;
+  liquidMesh.material.uniforms.pointer.value.set(liquidPointer.x, liquidPointer.y);
+  liquidMesh.material.uniforms.power.value += (liquidPointer.power - liquidMesh.material.uniforms.power.value) * 0.12;
+  liquidRenderer.render(liquidScene, liquidCamera);
+  requestAnimationFrame(animateLiquidText);
+}
+
+initLiquidText();
