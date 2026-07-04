@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Kompetenzmatrix Gestaltung mit KI" />
+    <title>Kompetenzmatrix Gestaltung mit KI</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="https://unpkg.com/swipejs@2.3.1/build/swipe.min.js"></script>
+    <script type="module" src="./kompetenzmatrix.js"></script>
+  </head>
+  <body class="matrix-page">
+    <main class="matrix-shell" aria-label="Kompetenzmatrix Gestaltung mit KI">
+      <header class="matrix-head">
+        <a class="matrix-back" href="./index.html">Claudia Mai</a>
+        <div>
+          <h1>Kompetenzmatrix Gestaltung mit KI</h1>
+          <p>Verschiebungen aus der früheren Matrix, erweitert um Ableitungen aus Design Unlimited.</p>
+        </div>
+      </header>
+
+      <section class="matrix-statement-zone" aria-label="Abgeleitete Statements">
+        <div class="swipe matrix-swipe" id="statementSwipe">
+          <div class="swipe-wrap" id="statementSlides"></div>
+        </div>
+        <div class="matrix-swipe-controls">
+          <button type="button" id="matrixPrev" aria-label="Vorheriges Statement">←</button>
+          <div class="matrix-dots" id="matrixDots" aria-hidden="true"></div>
+          <button type="button" id="matrixNext" aria-label="Nächstes Statement">→</button>
+        </div>
+      </section>
+
+      <section class="matrix-board" aria-label="Interaktive Kompetenzkarte">
+        <div class="matrix-column-heads" aria-hidden="true">
+          <span>Früher / klassisch</span>
+          <span>Mit KI wichtiger</span>
+          <span>Verschiebung</span>
+        </div>
+        <div class="matrix-lanes" id="matrixLanes" aria-hidden="true"></div>
+        <svg class="matrix-links" id="matrixLinks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="matrix-nodes" id="matrixNodes" aria-label="Kompetenzen"></div>
+      </section>
+
+      <aside class="matrix-detail" id="matrixDetail" aria-live="polite"></aside>
+    </main>
+  </body>
+</html>
