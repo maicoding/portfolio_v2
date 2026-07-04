@@ -1546,3 +1546,48 @@ body[data-field-effect="repair"] .field-index button.is-focus {
   background: rgba(160, 190, 255, 0.86);
   border-color: rgba(160, 190, 255, 0.86);
 }
+
+
+.field-copy h1,
+.field-copy p,
+.field-controls button,
+.field-index button,
+.field-signal {
+  will-change: transform, opacity;
+}
+
+.field-signal {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.42;
+  mix-blend-mode: screen;
+}
+
+.field-signal span {
+  position: absolute;
+  left: -20%;
+  width: 38%;
+  height: 1px;
+  background: #a0beff;
+  box-shadow: 0 0 18px rgba(160, 190, 255, 0.9);
+  opacity: 0;
+}
+
+.field-signal span:nth-child(1) {
+  top: 22%;
+}
+
+.field-signal span:nth-child(2) {
+  top: 49%;
+  background: #d8ff5c;
+  box-shadow: 0 0 22px rgba(216, 255, 92, 0.76);
+}
+
+.field-signal span:nth-child(3) {
+  top: 76%;
+  background: #0fffd7;
+  box-shadow: 0 0 20px rgba(15, 255, 215, 0.72);
+}

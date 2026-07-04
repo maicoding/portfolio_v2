@@ -1,9 +1,11 @@
 import * as THREE from "https://unpkg.com/three@0.185.0/build/three.module.js";
+import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js";
 import { projects } from "./projects.js";
 
 const canvas = document.getElementById("portfolio-webgl");
 const index = document.getElementById("field-index");
 const controls = document.querySelectorAll("[data-field-mode]");
+const signals = document.querySelectorAll(".field-signal span");
 
 const collect = (project) => [project.title, project.meta, project.hook, project.context, project.process, project.outcome, project.credits].join(" ");
 const buckets = {
@@ -31,6 +33,7 @@ const paletteSets = [
   [0xd8ff5c, 0xa0beff, 0xf4f0e8, 0x0fffd7]
 ];
 const palette = paletteSets[variantIndex];
+gsap.defaults({ duration: 0.8, ease: "power3.out", overwrite: "auto" });
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
@@ -245,7 +248,17 @@ const renderIndex = () => {
     .join("");
 };
 
+const pulseInterface = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  gsap.fromTo(
+    signals,
+    { xPercent: -120, autoAlpha: 0 },
+    { xPercent: 120, autoAlpha: 1, duration: 0.75, stagger: 0.08, ease: "expo.inOut" }
+  );
+};
+
 const openProject = (id) => {
+  pulseInterface();
   window.dispatchEvent(new CustomEvent("open-project", { detail: { id } }));
 };
 
@@ -254,9 +267,24 @@ const setFocus = (projectId, shouldRender = true) => {
   const indexInBucket = current.findIndex((project) => project.id === projectId);
   focusIndex = Math.max(indexInBucket, 0);
   objects.forEach((object) => {
-    object.focus = object.project.id === projectId ? 1 : 0;
+    const selected = object.project.id === projectId ? 1 : 0;
+    object.focus = selected;
+    gsap.to(object.dot.scale, {
+      x: 1 + selected * 2.8,
+      y: 1 + selected * 2.8,
+      z: 1 + selected * 2.8,
+      duration: selected ? 0.52 : 0.8,
+      ease: selected ? "back.out(2)" : "power2.out"
+    });
+    gsap.to(object.label.material, {
+      opacity: selected ? Math.min(1, object.active + 0.55) : Math.min(0.72, object.active + 0.38),
+      duration: 0.45
+    });
   });
   if (shouldRender) renderIndex();
+  if (shouldRender && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.fromTo("#field-index button.is-focus", { x: -18, autoAlpha: 0.72 }, { x: 0, autoAlpha: 1, duration: 0.44, ease: "power3.out" });
+  }
 };
 
 const focusNext = () => {
@@ -284,6 +312,8 @@ controls.forEach((button) => {
     const mode = button.dataset.fieldMode;
     if (mode === "next") {
       autoFocus = true;
+      pulseInterface();
+      gsap.to(group.rotation, { z: group.rotation.z + 0.28, duration: 0.7, ease: "power3.inOut" });
       focusNext();
       return;
     }
@@ -291,6 +321,8 @@ controls.forEach((button) => {
     focusIndex = 0;
     autoFocus = true;
     controls.forEach((item) => item.classList.toggle("is-active", item === button));
+    pulseInterface();
+    gsap.fromTo(button, { scale: 0.92 }, { scale: 1, duration: 0.45, ease: "back.out(2.4)" });
     const allowed = new Set(currentProjects().map((item) => item.id));
     objects.forEach((object) => {
       object.active = allowed.has(object.project.id) ? 1 : 0.12;
@@ -301,6 +333,24 @@ controls.forEach((button) => {
 
 controls[0]?.classList.add("is-active");
 setFocus(projects[0].id);
+
+const motion = gsap.matchMedia();
+motion.add(
+  {
+    reduce: "(prefers-reduced-motion: reduce)",
+    motion: "(prefers-reduced-motion: no-preference)"
+  },
+  (context) => {
+    if (context.conditions.reduce) return;
+    const intro = gsap.timeline({ defaults: { ease: "expo.out" } });
+    intro
+      .from(".field-copy h1", { yPercent: 28, autoAlpha: 0, duration: 1.1 })
+      .from(".field-copy p", { y: 18, autoAlpha: 0, duration: 0.7 }, "<0.18")
+      .from(".field-controls button", { y: 22, autoAlpha: 0, stagger: 0.055, duration: 0.58 }, "<0.12")
+      .from("#field-index button", { x: 46, autoAlpha: 0, stagger: 0.045, duration: 0.62 }, "<0.18");
+    gsap.to(".field-signal", { autoAlpha: 0.74, duration: 1.2, repeat: -1, yoyo: true, ease: "sine.inOut" });
+  }
+);
 
 const resize = () => {
   const { clientWidth, clientHeight } = canvas.parentElement;
