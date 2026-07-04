@@ -17,24 +17,10 @@
     <div class="noise-layer" aria-hidden="true"></div>
 
     <main class="minimal-main">
-      <section class="minimal-intro">
-        <h1 class="minimal-name">Claudia Mai</h1>
-        <p class="minimal-role">Design, Forschung, Lehre</p>
-
-        <h2 class="minimal-heading">Arbeitsweise</h2>
-        <div class="minimal-copy">
-          <p>Meine Projekte entstehen aus konkreten Fragestellungen im Kontext von Bildkultur, Plattformlogik und digitalen Produktionsbedingungen.</p>
-          <p>Ich untersuche, wie visuelle Systeme Bedeutung erzeugen und wie sich diese unter algorithmischen Bedingungen verändern.</p>
-          <p>Ich arbeite mit fotografischem Material, Text, Daten und generativen Verfahren.</p>
-          <p>Die Wahl des Mediums ergibt sich aus der jeweiligen Fragestellung.</p>
-          <p>Ergebnisse entstehen als Publikationen, räumliche Formate, digitale Interfaces oder hybride Settings.</p>
-        </div>
-      </section>
-
       <section class="postdigital-lab" id="postdigital-lab" aria-labelledby="postdigital-title">
         <div class="lab-head">
-          <p class="chapter-kicker">POSTDIGITALER TEIL</p>
-          <h2 id="postdigital-title">Interface als unruhiges Material</h2>
+          <p class="chapter-kicker">PD/CTRL</p>
+          <h2 id="postdigital-title">Die Seite frisst ihre Ordnung</h2>
         </div>
 
         <div class="agent-shell">
@@ -44,21 +30,21 @@
               <span data-agent-clock>00:00:00</span>
             </div>
             <label class="agent-command">
-              <span>Befehl</span>
+              <span>&gt;</span>
               <input
                 id="agent-input"
                 type="text"
                 autocomplete="off"
                 spellcheck="false"
-                value="mach die postdigitale Seite nervöser"
+                value="zerleg die ordnung"
               />
             </label>
-            <div class="agent-actions" aria-label="Agenten-Modi">
-              <button type="button" data-agent-command="mach die postdigitale Seite nervöser">Nervös</button>
-              <button type="button" data-agent-command="zeige nur Publikationen">Publikation</button>
-              <button type="button" data-agent-command="starte einen autonomen Rundgang">Rundgang</button>
-              <button type="button" data-agent-command="mach alles forensisch">Forensisch</button>
-              <button type="button" data-agent-command="öffne die Anti Navigation">Anti Nav</button>
+            <div class="agent-actions" aria-label="Modi">
+              <button type="button" data-agent-command="zerleg die ordnung">BRUCH</button>
+              <button type="button" data-agent-command="zeige nur Publikationen">PRINT</button>
+              <button type="button" data-agent-command="starte einen autonomen Rundgang">SCAN</button>
+              <button type="button" data-agent-command="mach alles forensisch">S/W</button>
+              <button type="button" data-agent-command="öffne die Anti Navigation">LOCH</button>
             </div>
           </div>
 
@@ -77,30 +63,45 @@
           </div>
         </div>
 
-        <div class="experiment-grid" aria-label="Postdigitale Experimente">
+        <div class="experiment-grid" aria-label="Schalter">
           <button type="button" class="experiment-tile" data-agent-command="sortiere nach Störung">
             <span>01</span>
-            <strong>Störsortierung</strong>
+            <strong>RISS</strong>
           </button>
           <button type="button" class="experiment-tile" data-agent-command="baue eine Ausstellung aus den digitalen Fremdkörpern">
             <span>02</span>
-            <strong>Ausstellungsebene</strong>
+            <strong>SCHICHT</strong>
           </button>
           <button type="button" class="experiment-tile" data-agent-command="markiere alles was Tool Ästhetik trägt">
             <span>03</span>
-            <strong>Tool-Marker</strong>
+            <strong>WERKZEUGHAUT</strong>
           </button>
           <button type="button" class="experiment-tile" data-agent-command="mach daraus ein Spiel">
             <span>04</span>
-            <strong>Spielzustand</strong>
+            <strong>SPIELFELD</strong>
           </button>
         </div>
       </section>
 
+      <section class="minimal-intro site-brief">
+        <h1 class="minimal-name">Claudia Mai</h1>
+        <p class="minimal-role">Design, Forschung, Lehre</p>
+
+        <h2 class="minimal-heading">Arbeitsweise</h2>
+        <div class="minimal-copy">
+          <p>Meine Projekte entstehen aus konkreten Fragestellungen im Kontext von Bildkultur, Plattformlogik und digitalen Produktionsbedingungen.</p>
+          <p>Ich untersuche, wie visuelle Systeme Bedeutung erzeugen und wie sich diese unter algorithmischen Bedingungen verändern.</p>
+          <p>Ich arbeite mit fotografischem Material, Text, Daten und generativen Verfahren.</p>
+          <p>Die Wahl des Mediums ergibt sich aus der jeweiligen Fragestellung.</p>
+          <p>Ergebnisse entstehen als Publikationen, räumliche Formate, digitale Interfaces oder hybride Settings.</p>
+        </div>
+      </section>
+
+
       <section class="section works">
         <div class="works-head">
-          <p class="chapter-kicker">ARCHIV</p>
-          <p class="works-hint" id="works-hint">Alle Projekte sichtbar</p>
+          <p class="chapter-kicker">INDEX</p>
+          <p class="works-hint" id="works-hint">offen</p>
         </div>
         <div class="works-grid" id="works-grid"></div>
       </section>

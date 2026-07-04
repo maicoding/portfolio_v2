@@ -70,29 +70,29 @@ const openDrawer = (projectId) => {
     : "";
 
   drawerContent.innerHTML = `
-    <p class="chapter-kicker">STORY LAYER</p>
+    <p class="chapter-kicker">AKTE</p>
     <h2 class="drawer-title">${escapeHtml(project.title)}</h2>
     <p class="drawer-sub">${escapeHtml(project.meta)}</p>
     ${mediaHtml}
 
     <section class="story-block">
-      <h3>Hook</h3>
+      <h3>Reiz</h3>
       <p>${escapeHtml(project.hook)}</p>
     </section>
     <section class="story-block">
-      <h3>Context</h3>
+      <h3>Lage</h3>
       <p>${escapeHtml(project.context)}</p>
     </section>
     <section class="story-block">
-      <h3>Process</h3>
+      <h3>Material</h3>
       <p>${escapeHtml(project.process)}</p>
     </section>
     <section class="story-block">
-      <h3>Outcome</h3>
+      <h3>Rest</h3>
       <p>${escapeHtml(project.outcome)}</p>
     </section>
     <section class="story-block">
-      <h3>Credits</h3>
+      <h3>Spur</h3>
       <p>${escapeHtml(project.credits)}</p>
     </section>
   `;
@@ -198,14 +198,14 @@ const executeAgentCommand = (command) => {
   document.querySelectorAll(".work-card").forEach((card) => card.classList.remove("is-current"));
 
   if (/rundgang|autonom/.test(normalized)) {
-    setMode("tour", "rundgang", "Autonomer Rundgang aktiv");
+    setMode("tour", "scan", "lauflicht");
     let index = 0;
     const step = () => {
       postdigitalCards.forEach((card) => card.classList.remove("is-current"));
       const card = postdigitalCards[index % postdigitalCards.length];
       card?.classList.add("is-current");
       card?.scrollIntoView({ behavior: "smooth", block: "center" });
-      feed("Rundgang", card?.querySelector(".work-card__title")?.textContent || "postdigital");
+      feed("scan", card?.querySelector(".work-card__title")?.textContent || "pd");
       index += 1;
       if (index < Math.min(postdigitalCards.length, 5)) window.setTimeout(step, 1300);
     };
@@ -214,54 +214,54 @@ const executeAgentCommand = (command) => {
   }
 
   if (/publikation|publishing|print/.test(normalized)) {
-    setMode("publication", "publikation", "Nur Publikationsbezüge sichtbar");
-    feed("Filter", "Publikationen und Textsysteme freigelegt");
+    setMode("publication", "print", "textreste");
+    feed("print", "1984 / fast fwd / textreste");
     return;
   }
 
   if (/forensisch|marker|markiere|tool/.test(normalized)) {
-    setMode("forensic", "forensisch", "Postdigitale Spuren markiert");
-    feed("Analyse", "Tool Ästhetik, Datenkörper und Publikationslogik markiert");
+    setMode("forensic", "s/w", "schnitte");
+    feed("s/w", "toolhaut / datenkörper / druckspur");
     return;
   }
 
   if (/anti|navigation|öffne|oeffne/.test(normalized)) {
-    setMode("anti", "anti navigation", "Postdigitaler Teil priorisiert");
-    feed("Anti Nav", "Nebenspuren gedimmt, postdigitale Pfade bleiben offen");
+    setMode("anti", "loch", "nebenwege aus");
+    feed("loch", "index verliert gewicht");
     return;
   }
 
   if (/spiel|game/.test(normalized)) {
-    setMode("game", "spielzustand", "Postdigitale Karten sind aktive Felder");
-    feed("Spiel", "Klicks öffnen Story Layer, markierte Karten zählen als Felder");
+    setMode("game", "spiel", "felder aktiv");
+    feed("spiel", "klick = akte");
     return;
   }
 
   if (/störung|stoerung|sortiere/.test(normalized)) {
-    setMode("nervous", "störung", "Archiv nach Störpotenzial aktiviert");
+    setMode("nervous", "bruch", "sortiert nach fehler");
     const cards = [...document.querySelectorAll(".work-card")];
     cards
       .sort((a, b) => Number(b.classList.contains("is-postdigital")) - Number(a.classList.contains("is-postdigital")))
       .forEach((card) => worksGrid?.append(card));
-    feed("Sortierung", "Digitale Fremdkörper nach vorn gezogen");
+    feed("bruch", "fremdkörper zuerst");
     return;
   }
 
   if (/ausstellung|fremdkörper|fremdkoerper/.test(normalized)) {
-    setMode("forensic", "ausstellungsebene", "Ausstellungsebene aktiv");
+    setMode("forensic", "schicht", "vier spuren");
     postdigitalCards.slice(0, 4).forEach((card) => card.classList.add("is-current"));
-    feed("Ebene", "Vier Arbeiten als temporäre Ausstellung markiert");
+    feed("schicht", "vier akten offen");
     return;
   }
 
-  setMode("nervous", "nervös", "Postdigitaler Modus aktiv");
-  feed("Befehl", command);
+  setMode("nervous", "bruch", "offen");
+  feed(">", command);
 };
 
 const setupPostdigitalAgent = () => {
   if (agentFeed?.children.length === 0) {
-    feed("System", "Lokaler Agent steuert nur den postdigitalen Teil und die Startseite");
-    feed("Bereich", `${projects.filter(isPostdigital).length} Projekte erkannt`);
+    feed("000", "bereit");
+    feed("007", `${projects.filter(isPostdigital).length} spuren`);
   }
 
   agentInput?.addEventListener("keydown", (event) => {

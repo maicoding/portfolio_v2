@@ -834,3 +834,391 @@ body[data-mode="tour"] .work-card.is-current {
     grid-template-columns: 1fr;
   }
 }
+
+
+body {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.16) 0 1px, transparent 1px 17px),
+    linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 29px),
+    conic-gradient(from 90deg at 18% 22%, #f73f16 0 6deg, transparent 6deg 92deg, #2fd0ff 92deg 97deg, transparent 97deg),
+    #050505;
+  background-attachment: fixed;
+}
+
+main.minimal-main {
+  max-width: min(1520px, calc(100vw - 1.2rem));
+  padding-inline: clamp(0.45rem, 1.3vw, 1.4rem);
+}
+
+.postdigital-lab {
+  min-height: calc(100vh - 1rem);
+  margin-top: 0.5rem;
+  padding: clamp(0.7rem, 2vw, 1.4rem);
+  border: 2px solid #f4f0e8;
+  background:
+    linear-gradient(90deg, rgba(247,63,22,0.28), transparent 24%),
+    linear-gradient(0deg, rgba(47,208,255,0.22), transparent 45%),
+    rgba(0,0,0,0.72);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(0.7rem, 1.5vw, 1.2rem);
+}
+
+.postdigital-lab::before {
+  inset: 0;
+  width: auto;
+  left: 0;
+  transform: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(244,240,232,0.16) 0 1px, transparent 1px 7.5vw),
+    repeating-linear-gradient(0deg, transparent 0 2.2rem, rgba(247,63,22,0.18) 2.2rem 2.25rem);
+}
+
+.postdigital-lab::after {
+  inset: auto 0 18% 0;
+  left: 0;
+  width: auto;
+  height: 18vh;
+  transform: none;
+  background: repeating-linear-gradient(0deg, rgba(244,240,232,0.22) 0 2px, transparent 2px 8px);
+  opacity: 0.2;
+}
+
+.lab-head {
+  grid-template-columns: 10ch minmax(0, 1fr);
+  align-items: start;
+}
+
+.lab-head .chapter-kicker {
+  writing-mode: vertical-rl;
+  min-height: 16rem;
+  margin: 0;
+  color: #050505;
+  background: var(--signal-c);
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+}
+
+.lab-head h2 {
+  max-width: 9ch;
+  font-size: clamp(4rem, 14vw, 15rem);
+  line-height: 0.72;
+  letter-spacing: 0;
+  color: #f4f0e8;
+  text-shadow: 0.06em 0 #f73f16, -0.04em 0 #2fd0ff;
+}
+
+.agent-shell {
+  grid-template-columns: minmax(260px, 0.56fr) minmax(0, 1.44fr);
+  gap: 0;
+  border: 2px solid #f4f0e8;
+  background: #050505;
+}
+
+.agent-console,
+.agent-output,
+.experiment-tile {
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.agent-console {
+  border-right: 2px solid #f4f0e8;
+  padding: clamp(0.7rem, 1.5vw, 1rem);
+}
+
+.agent-status {
+  font-size: 0.9rem;
+  color: #050505;
+  background: #f4f0e8;
+  padding: 0.35rem 0.45rem;
+}
+
+.agent-command {
+  grid-template-columns: 2.2rem 1fr;
+  align-items: stretch;
+}
+
+.agent-command span {
+  display: grid;
+  place-items: center;
+  background: var(--signal-a);
+  color: #050505;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.agent-command input {
+  min-height: 6.3rem;
+  border: 2px solid #f4f0e8;
+  border-left: 0;
+  background: #f4f0e8;
+  color: #050505;
+  font-size: clamp(1.15rem, 2.8vw, 2.35rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.agent-actions {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  border: 2px solid #f4f0e8;
+}
+
+.agent-actions button {
+  min-height: 4.8rem;
+  border: 0;
+  border-right: 2px solid #f4f0e8;
+  background: #050505;
+  color: #f4f0e8;
+  text-align: center;
+  font-size: clamp(0.82rem, 1.4vw, 1.2rem);
+  font-weight: 700;
+}
+
+.agent-actions button:last-child {
+  border-right: 0;
+}
+
+.agent-actions button:hover,
+.experiment-tile:hover {
+  background: var(--signal-c);
+  color: #050505;
+}
+
+.agent-output {
+  min-height: 42vh;
+  grid-template-columns: 1.2fr 0.8fr;
+}
+
+.live-map {
+  border-right: 2px solid #f4f0e8;
+  background:
+    repeating-linear-gradient(90deg, rgba(244,240,232,0.1) 0 1px, transparent 1px 4rem),
+    repeating-linear-gradient(0deg, rgba(244,240,232,0.12) 0 1px, transparent 1px 3rem),
+    #050505;
+}
+
+.live-map span {
+  border-width: 2px;
+  background: currentColor;
+  opacity: 0.82;
+  mix-blend-mode: difference;
+  animation: hard-blink 1.8s steps(1, end) infinite;
+}
+
+.live-map span:nth-child(even) {
+  animation-delay: 0.4s;
+}
+
+.agent-feed {
+  max-height: none;
+  padding: 0;
+  gap: 0;
+  background: #f4f0e8;
+}
+
+.agent-feed p {
+  min-height: 3.8rem;
+  border-bottom: 2px solid #050505;
+  color: #050505;
+  padding: 0.55rem 0.7rem;
+  font-size: clamp(0.85rem, 1.3vw, 1.2rem);
+  text-transform: uppercase;
+}
+
+.agent-feed strong {
+  display: inline-block;
+  min-width: 5ch;
+  color: #f73f16;
+}
+
+.experiment-grid {
+  margin-top: 0;
+  gap: 0;
+  border: 2px solid #f4f0e8;
+  border-bottom: 0;
+}
+
+.experiment-tile {
+  min-height: clamp(7rem, 16vw, 13rem);
+  border-right: 2px solid #f4f0e8;
+  border-bottom: 2px solid #f4f0e8;
+  padding: 0.65rem;
+}
+
+.experiment-tile:last-child {
+  border-right: 0;
+}
+
+.experiment-tile span {
+  color: var(--signal-a);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.experiment-tile strong {
+  font-size: clamp(1.65rem, 4.5vw, 5.5rem);
+  line-height: 0.78;
+}
+
+.site-brief {
+  max-width: none;
+  margin: 0 0 clamp(1rem, 2vw, 1.8rem);
+  border: 2px solid #f4f0e8;
+  background: #f4f0e8;
+  color: #050505;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.38fr) minmax(0, 0.62fr);
+  gap: 1rem;
+  padding: clamp(0.65rem, 1.4vw, 1rem);
+}
+
+.site-brief .minimal-name,
+.site-brief .minimal-heading,
+.site-brief .minimal-copy p,
+.site-brief .minimal-role {
+  color: #050505;
+}
+
+.site-brief .minimal-name {
+  font-size: clamp(2.6rem, 7vw, 8rem);
+  line-height: 0.78;
+}
+
+.site-brief .minimal-copy {
+  columns: 2;
+  display: block;
+}
+
+.works-head {
+  border: 2px solid #f4f0e8;
+  border-bottom: 0;
+  padding: 0.55rem 0.7rem;
+  background: #050505;
+}
+
+.works-grid {
+  margin-top: 0;
+  gap: 0;
+  border-left: 2px solid #f4f0e8;
+  border-top: 2px solid #f4f0e8;
+}
+
+.work-card,
+.work-card:nth-child(3n),
+.work-card:nth-child(4n) {
+  grid-column: span 3;
+  min-height: 260px;
+  border: 0;
+  border-right: 2px solid #f4f0e8;
+  border-bottom: 2px solid #f4f0e8;
+  background:
+    linear-gradient(135deg, rgba(247,63,22,0.2), transparent 38%),
+    #050505;
+  transform: none;
+}
+
+.work-card:hover {
+  transform: none;
+  background: #f4f0e8;
+  color: #050505;
+}
+
+.work-card:hover .work-card__meta,
+.work-card:hover .work-card__index {
+  color: #050505;
+}
+
+.work-card__title {
+  font-size: clamp(1.35rem, 2.4vw, 3.4rem);
+  line-height: 0.82;
+}
+
+.work-card__meta {
+  margin-top: auto;
+}
+
+.story-drawer {
+  background: #f4f0e8;
+  color: #050505;
+  border-left: 2px solid #050505;
+}
+
+.drawer-close {
+  background: #050505;
+  color: #f4f0e8;
+  border-bottom: 2px solid #050505;
+}
+
+.drawer-title,
+.drawer-sub,
+.story-block p {
+  color: #050505;
+}
+
+.story-block {
+  background: transparent;
+  border-top: 2px solid #050505;
+}
+
+.story-block h3 {
+  color: #f73f16;
+}
+
+@keyframes hard-blink {
+  0%, 62% { transform: scale(1); }
+  63%, 100% { transform: scale(0.28); }
+}
+
+@media (max-width: 1024px) {
+  .work-card,
+  .work-card:nth-child(3n) {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 760px) {
+  .lab-head {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-head .chapter-kicker {
+    writing-mode: horizontal-tb;
+    min-height: 0;
+  }
+
+  .agent-shell,
+  .agent-output,
+  .site-brief {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-console,
+  .live-map {
+    border-right: 0;
+    border-bottom: 2px solid #f4f0e8;
+  }
+
+  .agent-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-actions button {
+    border-right: 0;
+    border-bottom: 2px solid #f4f0e8;
+  }
+
+  .agent-actions button:last-child {
+    border-bottom: 0;
+  }
+
+  .experiment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experiment-tile {
+    border-right: 0;
+  }
+}
