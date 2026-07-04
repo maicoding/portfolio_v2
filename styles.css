@@ -1591,3 +1591,101 @@ body[data-field-effect="repair"] .field-index button.is-focus {
   background: #0fffd7;
   box-shadow: 0 0 20px rgba(15, 255, 215, 0.72);
 }
+
+
+.field-orbit {
+  position: absolute;
+  inset: clamp(6.5rem, 12vh, 9rem) clamp(19rem, 30vw, 34rem) clamp(7.5rem, 14vh, 10rem) clamp(1rem, 4vw, 4rem);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  pointer-events: none;
+}
+
+.field-work {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr);
+  column-gap: clamp(0.8rem, 2vw, 1.6rem);
+  align-items: baseline;
+  width: min(58rem, 100%);
+  border: 0;
+  border-bottom: 1px solid rgba(244, 240, 232, 0.24);
+  background: transparent;
+  color: rgba(244, 240, 232, 0.72);
+  text-align: left;
+  padding: clamp(0.34rem, 0.7vh, 0.64rem) 0;
+  pointer-events: auto;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.field-work span {
+  display: block;
+  grid-row: 1 / span 2;
+  color: #d8ff5c;
+  font: 700 0.72rem/1 "IBM Plex Mono", monospace;
+  padding-top: 0.18em;
+}
+
+.field-work strong {
+  display: block;
+  min-width: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.04rem, 2.05vw, 2.65rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.field-work em {
+  display: block;
+  min-width: 0;
+  margin-top: 0.38rem;
+  color: rgba(244, 240, 232, 0.54);
+  font: 500 0.68rem/1.08 "IBM Plex Mono", monospace;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.field-work.is-focus {
+  z-index: 5;
+  color: #f4f0e8;
+  border-bottom-color: #d8ff5c;
+}
+
+.field-work.is-focus strong {
+  font-size: clamp(1.65rem, 4.45vw, 5.9rem);
+  line-height: 0.82;
+}
+
+.field-work.is-focus span,
+.field-work.is-focus em {
+  color: #d8ff5c;
+}
+
+@media (max-width: 980px) {
+  .field-orbit {
+    position: relative;
+    inset: auto;
+    z-index: 4;
+    display: grid;
+    gap: 0;
+    padding: 0 1rem 1rem;
+  }
+
+  .field-work {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    box-shadow: none;
+    border-top: 1px solid rgba(244, 240, 232, 0.2);
+  }
+}

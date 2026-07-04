@@ -3,6 +3,7 @@ import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js";
 import { projects } from "./projects.js";
 
 const canvas = document.getElementById("portfolio-webgl");
+const orbit = document.getElementById("field-orbit");
 const index = document.getElementById("field-index");
 const controls = document.querySelectorAll("[data-field-mode]");
 const signals = document.querySelectorAll(".field-signal span");
@@ -24,7 +25,6 @@ let nextFocusAt = 0;
 const variants = ["terminal", "scan", "splat", "repair"];
 const variant = variants[Math.floor(Math.random() * variants.length)];
 document.body.dataset.fieldEffect = variant;
-
 const variantIndex = variants.indexOf(variant);
 const paletteSets = [
   [0xa0beff, 0x0fffd7, 0xf4f0e8, 0x5a78ff],
@@ -33,9 +33,10 @@ const paletteSets = [
   [0xd8ff5c, 0xa0beff, 0xf4f0e8, 0x0fffd7]
 ];
 const palette = paletteSets[variantIndex];
-gsap.defaults({ duration: 0.8, ease: "power3.out", overwrite: "auto" });
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+gsap.defaults({ duration: 0.65, ease: "power3.out", overwrite: "auto" });
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true, powerPreference: "high-performance" });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -68,10 +69,7 @@ const background = new THREE.Mesh(
       uniform vec2 resolution;
       varying vec2 vUv;
 
-      float hash(vec2 p) {
-        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-      }
-
+      float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
       float noise(vec2 p) {
         vec2 i = floor(p);
         vec2 f = fract(p);
@@ -82,7 +80,6 @@ const background = new THREE.Mesh(
         vec2 u = f * f * (3.0 - 2.0 * f);
         return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
       }
-
       float lineField(vec2 uv, float angle, float density) {
         float v = uv.x * cos(angle) + uv.y * sin(angle);
         return smoothstep(0.965, 1.0, fract(v * density));
@@ -143,76 +140,29 @@ const background = new THREE.Mesh(
 background.position.z = -12;
 scene.add(background);
 
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2(9, 9);
 const startTime = performance.now();
 const objects = [];
 const links = [];
-let hovered = null;
 let targetSpin = 0;
 
-const makeLabel = (project, i) => {
-  const c = document.createElement("canvas");
-  c.width = 1024;
-  c.height = 256;
-  const ctx = c.getContext("2d");
-  const accent = `#${palette[i % palette.length].toString(16).padStart(6, "0")}`;
-  ctx.clearRect(0, 0, c.width, c.height);
-  ctx.fillStyle = accent;
-  ctx.fillRect(0, 0, 14, 256);
-  ctx.fillStyle = "#f4f0e8";
-  ctx.font = "700 70px Syne, sans-serif";
-  ctx.textBaseline = "top";
-  ctx.fillText(project.title.toUpperCase(), 44, 26, 900);
-  ctx.font = "500 32px IBM Plex Mono, monospace";
-  ctx.fillText(project.meta.toUpperCase(), 48, 126, 870);
-  ctx.fillStyle = accent;
-  ctx.font = "700 26px IBM Plex Mono, monospace";
-  ctx.fillText(String(i + 1).padStart(2, "0"), 48, 184);
-  const texture = new THREE.CanvasTexture(c);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearFilter;
-  return texture;
-};
-
-const makeNode = (project, i) => {
-  const label = new THREE.Sprite(
-    new THREE.SpriteMaterial({
-      map: makeLabel(project, i),
-      transparent: true,
-      opacity: 0.62,
-      depthWrite: false
-    })
-  );
-  label.scale.set(4.7, 1.18, 1);
-  label.userData.project = project;
-  label.userData.kind = "label";
-
+projects.forEach((project, i) => {
   const angle = (i / projects.length) * Math.PI * 2;
   const radius = 5.4 + (i % 3) * 0.8;
-  label.position.set(Math.cos(angle) * radius, Math.sin(angle * 1.4) * 2.6, Math.sin(angle) * 3.7);
-  group.add(label);
-
   const dot = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.18 + (i % 3) * 0.04, 1),
-    new THREE.MeshBasicMaterial({ color: palette[i % palette.length], transparent: true, opacity: 0.9 })
+    new THREE.IcosahedronGeometry(0.2 + (i % 3) * 0.05, 1),
+    new THREE.MeshBasicMaterial({ color: palette[i % palette.length], transparent: true, opacity: 0.88 })
   );
-  dot.position.copy(label.position);
+  dot.position.set(Math.cos(angle) * radius, Math.sin(angle * 1.4) * 2.6, Math.sin(angle) * 3.7);
   dot.userData.project = project;
-  dot.userData.kind = "dot";
   group.add(dot);
-
-  objects.push({ project, label, dot, base: label.position.clone(), active: 1, focus: 0 });
-};
-
-projects.forEach(makeNode);
+  objects.push({ project, dot, base: dot.position.clone(), active: 1, focus: 0 });
+});
 
 for (let i = 0; i < objects.length; i += 1) {
   const a = objects[i];
   const b = objects[(i + 2) % objects.length];
-  const geometry = new THREE.BufferGeometry().setFromPoints([a.base, b.base]);
   const line = new THREE.Line(
-    geometry,
+    new THREE.BufferGeometry().setFromPoints([a.base, b.base]),
     new THREE.LineBasicMaterial({ color: palette[i % palette.length], transparent: true, opacity: 0.18 })
   );
   group.add(line);
@@ -220,7 +170,7 @@ for (let i = 0; i < objects.length; i += 1) {
 }
 
 const particleGeometry = new THREE.BufferGeometry();
-const particleCount = 1400;
+const particleCount = 1500;
 const positions = new Float32Array(particleCount * 3);
 for (let i = 0; i < particleCount; i += 1) {
   positions[i * 3] = (Math.random() - 0.5) * 28;
@@ -248,13 +198,22 @@ const renderIndex = () => {
     .join("");
 };
 
+const renderOrbit = () => {
+  const current = currentProjects();
+  orbit.innerHTML = current
+    .map((project, i) => `
+      <button type="button" data-project-id="${project.id}" class="field-work ${project.id === current[focusIndex % current.length]?.id ? "is-focus" : ""}" style="--slot:${i}; --count:${current.length};">
+        <span>${String(i + 1).padStart(2, "0")}</span>
+        <strong>${project.title}</strong>
+        <em>${project.meta}</em>
+      </button>
+    `)
+    .join("");
+};
+
 const pulseInterface = () => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  gsap.fromTo(
-    signals,
-    { xPercent: -120, autoAlpha: 0 },
-    { xPercent: 120, autoAlpha: 1, duration: 0.75, stagger: 0.08, ease: "expo.inOut" }
-  );
+  gsap.fromTo(signals, { xPercent: -120, autoAlpha: 0 }, { xPercent: 120, autoAlpha: 1, duration: 0.75, stagger: 0.08, ease: "expo.inOut" });
 };
 
 const openProject = (id) => {
@@ -270,20 +229,20 @@ const setFocus = (projectId, shouldRender = true) => {
     const selected = object.project.id === projectId ? 1 : 0;
     object.focus = selected;
     gsap.to(object.dot.scale, {
-      x: 1 + selected * 2.8,
-      y: 1 + selected * 2.8,
-      z: 1 + selected * 2.8,
-      duration: selected ? 0.52 : 0.8,
+      x: 1 + selected * 3.2,
+      y: 1 + selected * 3.2,
+      z: 1 + selected * 3.2,
+      duration: selected ? 0.5 : 0.8,
       ease: selected ? "back.out(2)" : "power2.out"
     });
-    gsap.to(object.label.material, {
-      opacity: selected ? Math.min(1, object.active + 0.55) : Math.min(0.72, object.active + 0.38),
-      duration: 0.45
-    });
   });
-  if (shouldRender) renderIndex();
-  if (shouldRender && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    gsap.fromTo("#field-index button.is-focus", { x: -18, autoAlpha: 0.72 }, { x: 0, autoAlpha: 1, duration: 0.44, ease: "power3.out" });
+  if (shouldRender) {
+    renderIndex();
+    renderOrbit();
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.fromTo(".field-work.is-focus", { autoAlpha: 0.58 }, { autoAlpha: 1, duration: 0.42, ease: "power3.out" });
+      gsap.fromTo("#field-index button.is-focus", { x: -18, autoAlpha: 0.72 }, { x: 0, autoAlpha: 1, duration: 0.36, ease: "power3.out" });
+    }
   }
 };
 
@@ -294,17 +253,24 @@ const focusNext = () => {
   setFocus(current[focusIndex].id);
 };
 
-index.addEventListener("click", (event) => {
+const handleProjectIntent = (event) => {
   const button = event.target.closest("[data-project-id]");
-  if (!button) return;
-  autoFocus = false;
-  setFocus(button.dataset.projectId);
-  openProject(button.dataset.projectId);
-});
+  if (!button) return null;
+  return button.dataset.projectId;
+};
 
-index.addEventListener("pointerover", (event) => {
-  const button = event.target.closest("[data-project-id]");
-  if (button) setFocus(button.dataset.projectId, false);
+[index, orbit].forEach((root) => {
+  root.addEventListener("click", (event) => {
+    const id = handleProjectIntent(event);
+    if (!id) return;
+    autoFocus = false;
+    setFocus(id);
+    openProject(id);
+  });
+  root.addEventListener("pointerover", (event) => {
+    const id = handleProjectIntent(event);
+    if (id) setFocus(id, false);
+  });
 });
 
 controls.forEach((button) => {
@@ -335,22 +301,16 @@ controls[0]?.classList.add("is-active");
 setFocus(projects[0].id);
 
 const motion = gsap.matchMedia();
-motion.add(
-  {
-    reduce: "(prefers-reduced-motion: reduce)",
-    motion: "(prefers-reduced-motion: no-preference)"
-  },
-  (context) => {
-    if (context.conditions.reduce) return;
-    const intro = gsap.timeline({ defaults: { ease: "expo.out" } });
-    intro
-      .from(".field-copy h1", { yPercent: 28, autoAlpha: 0, duration: 1.1 })
-      .from(".field-copy p", { y: 18, autoAlpha: 0, duration: 0.7 }, "<0.18")
-      .from(".field-controls button", { y: 22, autoAlpha: 0, stagger: 0.055, duration: 0.58 }, "<0.12")
-      .from("#field-index button", { x: 46, autoAlpha: 0, stagger: 0.045, duration: 0.62 }, "<0.18");
-    gsap.to(".field-signal", { autoAlpha: 0.74, duration: 1.2, repeat: -1, yoyo: true, ease: "sine.inOut" });
-  }
-);
+motion.add({ reduce: "(prefers-reduced-motion: reduce)", motion: "(prefers-reduced-motion: no-preference)" }, (context) => {
+  if (context.conditions.reduce) return;
+  gsap.timeline({ defaults: { ease: "expo.out" } })
+    .from(".field-copy h1", { yPercent: 28, autoAlpha: 0, duration: 1.1 })
+    .from(".field-copy p", { y: 18, autoAlpha: 0, duration: 0.7 }, "<0.18")
+    .from(".field-controls button", { y: 22, autoAlpha: 0, stagger: 0.055, duration: 0.58 }, "<0.12")
+    .from(".field-work", { autoAlpha: 0, stagger: 0.055, duration: 0.7 }, "<0.18")
+    .from("#field-index button", { x: 46, autoAlpha: 0, stagger: 0.045, duration: 0.62 }, "<0.1");
+  gsap.to(".field-signal", { autoAlpha: 0.74, duration: 1.2, repeat: -1, yoyo: true, ease: "sine.inOut" });
+});
 
 const resize = () => {
   const { clientWidth, clientHeight } = canvas.parentElement;
@@ -362,20 +322,15 @@ const resize = () => {
 
 const setPointer = (event) => {
   const rect = canvas.getBoundingClientRect();
-  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  pointer.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
-  targetSpin = pointer.x * 0.32;
+  const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  targetSpin = x * 0.32;
   autoFocus = false;
 };
 
 canvas.addEventListener("pointermove", setPointer);
 canvas.addEventListener("pointerleave", () => {
-  pointer.set(9, 9);
   targetSpin = 0;
   autoFocus = true;
-});
-canvas.addEventListener("click", () => {
-  if (hovered) openProject(hovered.userData.project.id);
 });
 
 const animate = () => {
@@ -390,29 +345,19 @@ const animate = () => {
   background.material.uniforms.time.value = time;
   particles.rotation.y = time * 0.025;
 
-  raycaster.setFromCamera(pointer, camera);
-  const hit = raycaster.intersectObjects(objects.map((object) => object.label), false)[0]?.object || null;
-  hovered = hit;
-  if (hovered) setFocus(hovered.userData.project.id);
-
   objects.forEach((object, i) => {
-    const isHover = hovered?.userData.project.id === object.project.id ? 1 : 0;
-    const energy = object.active * (0.62 + object.focus * 0.72 + isHover * 0.42);
+    const energy = object.active * (0.62 + object.focus * 0.72);
     const drift = Math.sin(time * 0.72 + i * 1.9);
     const target = object.base.clone();
     target.x += drift * 0.28;
     target.y += Math.cos(time * 0.48 + i) * 0.18;
-    target.z += object.focus * 1.6 + isHover * 0.9;
-    object.label.position.lerp(target, 0.06);
-    object.dot.position.copy(object.label.position);
-    object.label.material.opacity += (Math.min(1, energy) - object.label.material.opacity) * 0.08;
-    object.label.scale.x += ((4.7 + object.focus * 1.2 + isHover * 0.8) - object.label.scale.x) * 0.08;
-    object.dot.scale.setScalar(1 + object.focus * 2 + isHover);
-    object.dot.material.opacity = Math.min(1, object.active + object.focus * 0.4);
+    target.z += object.focus * 1.6;
+    object.dot.position.lerp(target, 0.06);
+    object.dot.material.opacity = Math.min(1, energy);
   });
 
   links.forEach(({ line, a, b }) => {
-    line.geometry.setFromPoints([a.label.position, b.label.position]);
+    line.geometry.setFromPoints([a.dot.position, b.dot.position]);
     line.material.opacity = 0.08 + (a.focus || b.focus ? 0.32 : 0) + Math.min(a.active, b.active) * 0.12;
   });
 
